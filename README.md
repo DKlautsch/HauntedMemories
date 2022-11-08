@@ -1,2 +1,2 @@
-# HeuntedMemories
-Repositoory of Haunnted Memories, Double Clicks 3rd Year Project for UDP
+# HauntedMemories
+Repositoory of Haunted Memories, Double Clicks 3rd Year Project for UDP
