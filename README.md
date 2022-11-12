@@ -3,9 +3,9 @@
 ## Overview ##
 This repository contains code for the game engine
 
-## Table of Contents ##
+## Table of Necessary Knowledge ##
 | Topic | See (Source Code) | Additional Reading |
-| :---------------- | :--------------- | :--------------- | :--------------- | 
+| :---------------- | :--------------- | :--------------- |
 | Encapsulating translation, rotation, and scale of an object|Transform|None|
 | Encapsulating View and Projection |Camera|[Basic Matrices](http://rbwhitaker.wikidot.com/monogame-basic-matrices)|
 | Representing drawn objects and non-drawn objects |GameObject, Component|None|
@@ -22,22 +22,40 @@ This repository contains code for the game engine
 | Adding utility and extension classes to include useful secondary functionality (e.g. Vector3::Round) |Vector3Extension, PerfUtility, SerializationUtility |None|
 | Adding support for multiple scenes and multiple cameras | CameraManager, SceneManager |None|
 | Create behaviours (i.e. GameObject components) to add simple camera types | SecurityCameraBehaviour, CurveBehaviour, Curve|None|
+| Add Integer2 to demonstrate operator overloading | Integer2|[C# - Operator Overloading](https://www.tutorialspoint.com/csharp/csharp_operator_overloading.htm)|
+
+
+### Add To Table
+- [ ] Overload operators - Integer2
 
 ### Exercises
-- [ ] Add Integer2 to demo operator overloading in C#
+- [x] Add Integer2 to demo operator overloading in C# and add [expression bodied members](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members)
+- [ ] Add ThirdPersonController to also demo use of FirstPersonController
 
 ### Demo/Comment
-- [ ] Demo [git emojis](https://gitmoji.dev/) for begin, feature, bug, fix, refactor, remove
-- [ ] Relationship between world scale and movement speed
+- [x] Demo [git emojis](https://gitmoji.dev/) for begin, feature, bug, fix, refactor, remove
+- [x] Relationship between world scale and movement speed
+- [x] Demo PerfUtility updates re SpriteBatchInfo
+- [x] Demo FirstPersonController
+- [x] Demo SoundManager
 - [ ] Demo EventDispatcher
+- [ ] [Sound Assets - Big Sound Bank](https://bigsoundbank.com/)
 
-### Bugs
+### Bugs (MUST)
+- [x] Fix depth problem on draw
 - [x] Fix FirstPersonController rotation
 - [x] Fix GameObject::GetComponent<>() - see FOVCameraController
 - [x] PerfUtility is not updating FPS - Fixed - base.Update() was accidentally removed
 - [ ] Fix CycledTranslationBehaviour
 
-### Possible Improvements
+### Optimize (SHOULD)
+- [ ] Add clean/dirty flag to Transform on change
+- [ ] Add clean/dirty flag to Camera on change
+- [ ] Create renderers list in GameObjectList to optimize obtaining renderer in SceneRenderer::Draw()
+- [ ] Change List to SortedList in GameObjectList to sort by material and reduce rendertime
+- [ ] Add event notification on Transform change
+
+### Possible Improvements (COULD)
 - [ ] Add InputDevice to separate input from keyboard or gamepad and allow mappings
 
 ### To Do - Week 5
@@ -73,6 +91,9 @@ This repository contains code for the game engine
 - [x] Added Curve classes for camera controller
 
 ### To Do - Week 7
+- [x] Practice extension of a class (see Extensions)
+- [x] Add Integer2 for use with screen resolution to prevent need to typecast - see InitializeGraphics()
+- [x] Refactor RotationBehaviour 
 - [x] Added pre-processor directives (i.e. #if...) to set HIRES and DEMO in Main and AppData
 - [x] Re-added GameObject::RemoveComponent<T>() to support removal of components by type
 - [x] Added Resolutions to clarify and standardize setting screen resolutions
@@ -92,16 +113,17 @@ This repository contains code for the game engine
 
 ### To Do - Week 8
 - [x] Finish 1st Person Camera
-- [ ] Convert SceneManager and CameraManager to inherit from DrawableGameComponent and GameComponent 
+- [x] Add CameraProjectionType and Viewport to Camera
+- [x] Add ThirdPersonController
+- [x] Add RenderManager to render Scene data and remove Draw from Scene
+- [x] Convert SceneManager and CameraManager to inherit from DrawableGameComponent and GameComponent 
+- [x] Add Camera::Viewport
+- [x] Add support for Material alpha and diffuse color
+- [x] Increase decimal precision on Camera::rotation in perf utility to 2 decimal places to support accurate curve creation
+- [x] Added GDEvent
+- [ ] Add RailController, DriveController
+- [ ] Add support for cloning GameObjects, Camera
 - [ ] Add ActionType enum to support turning Update and Draw on/off during gameplay (hint: use when menu is shown) for specific GameObject and Scene
-- [ ] Change List to SortedList in GameObjectList to sort by material and reduce rendertime
-- [ ] Add support for cloning GameObjects
-- [ ] Add Camera::Viewport
-- [ ] Add clean/dirty flag to Transform on change
-- [ ] Add event notification on Transform change
-- [ ] Practice extension of a class (see Extensions)
-- [ ] Add Integer2 for use with screen resolution to prevent need to typecast - see InitializeGraphics()
-- [ ] Refactor RotationBehaviour 
 - [ ] Move level-specific methods to Level class
 
  

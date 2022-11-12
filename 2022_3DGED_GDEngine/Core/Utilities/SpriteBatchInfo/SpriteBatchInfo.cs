@@ -37,12 +37,25 @@ namespace GD.Engine.Utilities
         }
     }
 
+    public class PlayerInfo : SpriteBatchInfo
+    {
+        public PlayerInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
+        {
+        }
+
+        public override void Draw(Vector2 position)
+        {
+            //Application.Player.Inventory.ToString()
+        }
+    }
+
     /// <summary>
     /// Add a text label to the performance UI
     /// </summary>
     public class TextInfo : SpriteBatchInfo
     {
-        public TextInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
+        public TextInfo(SpriteBatch spriteBatch, SpriteFont spriteFont,
+            string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
         {
         }
 
@@ -94,7 +107,7 @@ namespace GD.Engine.Utilities
 
         public override void Draw(Vector2 position)
         {
-            spriteBatch.DrawString(spriteFont, $"{label}{Application.CameraManager.ActiveCamera.transform.rotation.GetNewRounded(1)}", position, color, rotation, origin, scale, effects, layerDepth);
+            spriteBatch.DrawString(spriteFont, $"{label}{Application.CameraManager.ActiveCamera.transform.rotation.GetNewRounded(2)}", position, color, rotation, origin, scale, effects, layerDepth);
         }
     }
 
@@ -103,7 +116,8 @@ namespace GD.Engine.Utilities
     /// </summary>
     public class CameraNameInfo : SpriteBatchInfo
     {
-        public CameraNameInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
+        public CameraNameInfo(SpriteBatch spriteBatch, SpriteFont spriteFont,
+            string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
         {
         }
 

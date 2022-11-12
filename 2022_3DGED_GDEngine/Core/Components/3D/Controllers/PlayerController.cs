@@ -5,9 +5,9 @@ using Microsoft.Xna.Framework.Input;
 namespace GD.Engine
 {
     /// <summary>
-    /// Adds simple non-collidable 1st person controller to camera using keyboard and mouse input
+    /// Adds simple non-collidable player controller using keyboard
     /// </summary>
-    public class FirstPersonController : Component
+    public class PlayerController : Component
     {
         #region Fields
 
@@ -27,12 +27,12 @@ namespace GD.Engine
 
         #region Constructors
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, float rotationSpeed, bool isGrounded = true)
+        public PlayerController(float moveSpeed, float strafeSpeed, float rotationSpeed, bool isGrounded = true)
     : this(moveSpeed, strafeSpeed, rotationSpeed * Vector2.One, isGrounded)
         {
         }
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, bool isGrounded = true)
+        public PlayerController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, bool isGrounded = true)
         {
             this.moveSpeed = moveSpeed;
             this.strafeSpeed = strafeSpeed;
@@ -46,7 +46,6 @@ namespace GD.Engine
 
         public override void Update(GameTime gameTime)
         {
-            HandleMouseInput(gameTime);
             HandleKeyboardInput(gameTime);
         }
 
@@ -54,15 +53,15 @@ namespace GD.Engine
         {
             translation = Vector3.Zero;
 
-            if (Input.Keys.IsPressed(Keys.W))
+            if (Input.Keys.IsPressed(Keys.U))
                 translation += transform.World.Forward * moveSpeed * gameTime.ElapsedGameTime.Milliseconds;
-            else if (Input.Keys.IsPressed(Keys.S))
+            else if (Input.Keys.IsPressed(Keys.J))
                 translation -= transform.World.Forward * moveSpeed * gameTime.ElapsedGameTime.Milliseconds;
 
-            if (Input.Keys.IsPressed(Keys.A))
-                translation += transform.World.Left * strafeSpeed * gameTime.ElapsedGameTime.Milliseconds;
-            else if (Input.Keys.IsPressed(Keys.D))
-                translation += transform.World.Right * strafeSpeed * gameTime.ElapsedGameTime.Milliseconds;
+            //if (Input.Keys.IsPressed(Keys.H))
+            //   // transform.Rotate();
+            //else if (Input.Keys.IsPressed(Keys.K))
+            //   // transform.Rotate();
 
             if (isGrounded)
                 translation.Y = 0;
@@ -71,24 +70,13 @@ namespace GD.Engine
             transform.Translate(translation);
         }
 
-        protected virtual void HandleMouseInput(GameTime gameTime)
-        {
-            rotation = Vector3.Zero;
-            var delta = Input.Mouse.Delta;
-
-            if (delta.Length() != 0)
-            {
-                //Q - where are X and Y reversed?
-                rotation.Y -= delta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
-                rotation.X -= delta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
-                transform.SetRotation(rotation);
-            }
-        }
-
         #endregion Actions - Update, Input
 
         #region Actions - Gamepad (Unused)
 
+        protected virtual void HandleMouseInput(GameTime gameTime)
+        {
+        }
         protected virtual void HandleGamepadInput(GameTime gameTime)
         {
         }

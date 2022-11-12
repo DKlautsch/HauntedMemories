@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.CodeDom;
 using System.Collections.Generic;
 
 namespace GD.Engine.Utilities
@@ -16,6 +15,7 @@ namespace GD.Engine.Utilities
         #region Fields
 
         private SpriteBatch spriteBatch;
+
         /// <summary>
         /// Starting position on UI for first line of performance info
         /// </summary>
@@ -108,20 +108,24 @@ namespace GD.Engine.Utilities
         //    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend, null, null);
         //    spriteBatch.DrawString(spriteFont, $"FPS [{fps}]", fpsTextStartPosition, fpsTextColor);
 
-        //    name
+        //    //name
         //    spriteBatch.DrawString(spriteFont, $"Name:{Application.CameraManager.ActiveCameraName}", fpsTextStartPosition + new Vector2(0, 20), Color.Yellow);
 
-        //    position
+        //    //position
         //    var camPos = Application.CameraManager.ActiveCamera.transform.translation;
         //    camPos.Round(1);
         //    spriteBatch.DrawString(spriteFont, $"Pos:{camPos}", fpsTextStartPosition + new Vector2(0, 40), Color.Yellow);
 
-        //    rotation
+        //    //rotation
         //    var camRot = Application.CameraManager.ActiveCamera.transform.rotation;
         //    camRot.Round(1);
         //    spriteBatch.DrawString(spriteFont, $"Rot:{camRot}", fpsTextStartPosition + new Vector2(0, 60), Color.Yellow);
 
-        //    TODO - add more here
+        //    var camScale = Application.CameraManager.ActiveCamera.transform.scale;
+        //    camScale.Round(1);
+        //    spriteBatch.DrawString(spriteFont, $"Scale:{camScale}", fpsTextStartPosition + new Vector2(0, 80), Color.Yellow);
+
+        //    //TODO - add more here
         //    spriteBatch.End();
         //}
 

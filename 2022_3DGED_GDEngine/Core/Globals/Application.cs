@@ -53,6 +53,11 @@ namespace GD.Engine.Globals
         /// </summary>
         public static Screen Screen { get; set; }
 
+        /// <summary>
+        /// Store a handle to currently active player
+        /// </summary>
+        public static GameObject Player { get; set; }
+
         #endregion Properties
     }
 }
