@@ -163,7 +163,9 @@ namespace GD.App
                 soundEffect,
                 SoundCategoryType.Alarm,
                 new Vector3(1, 1, 0),
-                false));
+                true));
+            soundManager.Play2D("boom1");
+        
         }
 
         private void LoadTextures()
@@ -792,6 +794,12 @@ namespace GD.App
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D))
+                Application.SoundManager.Resume("boom1");
+            else
+                Application.SoundManager.Pause("boom1");
+
 
             //update all drawn game objects in the active scene
             //sceneManager.Update(gameTime);
