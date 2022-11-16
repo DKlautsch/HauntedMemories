@@ -324,11 +324,8 @@ namespace GD.App
             //create sky
             InitializeSkyBoxAndGround(worldScale);
 
-            //quad with crate texture
-            InitializeDemoQuad();
-
             //load an FBX and draw
-            InitializeCrateModel();
+            InitializeToolbox();
 
             //quad with a tree texture
             InitializeTreeQuad();
@@ -342,52 +339,25 @@ namespace GD.App
             //Bring in dat queen!
             InitializeLadyRoesia();
 
-            InitializeChair();
+            InitializeBench();
 
             InitializeTable();
 
-            InitializeTowerModel();
-        }
+            InitializeTowerModels();
 
-        private void InitializeTowerModel()
-        {
-            //Tower Right
-            var gameObject = new GameObject("TowerModelLeft",
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.015f * Vector3.One,
-                new Vector3(11, 4.8f, 0), new Vector3(-2, 3, -11));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV 2");
-            var model = Content.Load<Model>("Assets/Models/Tower3");
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(effect),
-                new Material(texture, 1f, Color.Silver),
-                mesh));
-            sceneManager.ActiveScene.Add(gameObject);
+            InitializeEntrance();
 
-            //Tower Left
-            gameObject = new GameObject("TowerModelRight",
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.015f * Vector3.One,
-                new Vector3(11, 4.8f, 0), new Vector3(-18, 3, -11));
-            texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV 2");
-            model = Content.Load<Model>("Assets/Models/Tower3");
-            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(effect),
-                new Material(texture, 1f, Color.Silver),
-                mesh));
-            sceneManager.ActiveScene.Add(gameObject);
-        }
+            InitializeFloor();
+        }       
 
-        private void InitializeCrateModel()
+        private void InitializeToolbox()
         {
             //game object
-            var gameObject = new GameObject("CrateModel",
+            var gameObject = new GameObject("ToolboxModel",
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.0045f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(2, 0, 0));
+                new Vector3(0, 0, 0), new Vector3(7, 0, -3));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
 
             var model = Content.Load<Model>("Assets/Models/Crate1");
@@ -401,14 +371,14 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
         }       
 
-        private void InitializeChair()
+        private void InitializeBench()
         {
             //game object
-            var gameObject = new GameObject("ChairModel",
+            var gameObject = new GameObject("BenchModel",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.35f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(6, 0, 0));
+            gameObject.Transform = new Transform(0.32f * Vector3.One,
+                new Vector3(0, 4, 0), new Vector3(10, 0, -4));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
 
             var model = Content.Load<Model>("Assets/Models/Chair");
@@ -429,7 +399,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.2f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(14, 0, 0));
+                new Vector3(0, 0, 0), new Vector3(14, 0, -16));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
 
             var model = Content.Load<Model>("Assets/Models/Table");
@@ -449,8 +419,8 @@ namespace GD.App
             var gameObject = new GameObject("WellModel",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.7f * Vector3.One,
-                new Vector3(0, -6, 0), new Vector3(-20, 0, -6));
+            gameObject.Transform = new Transform(0.5f * Vector3.One,
+                new Vector3(0, -6, 0), new Vector3(-15, 0, -6));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
 
             var model = Content.Load<Model>("Assets/Models/Old_Well");
@@ -464,27 +434,13 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
         }
 
-        private void InitializeDemoQuad()
-        {
-            //game object
-            var gameObject = new GameObject("my first quad",
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(null, null, new Vector3(-1, 2, 1));  //World
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
-                new Material(texture, 1), new QuadMesh(_graphics.GraphicsDevice)));
-
-            gameObject.AddComponent(new SimpleRotationBehaviour(new Vector3(1, 0, 0), MathHelper.ToRadians(1 / 16.0f)));
-
-            sceneManager.ActiveScene.Add(gameObject);
-        }
-
         private void InitializeTreeQuad()
         {
             //game object
             var gameObject = new GameObject("my first tree", ObjectType.Static,
                 RenderType.Transparent);
-            gameObject.Transform = new Transform(new Vector3(3, 3, 1), null, new Vector3(-3, 1.5f, 1));  //World
+            gameObject.Transform = new Transform(new Vector3(3, 3, 1),
+                null, new Vector3(-5, 1.5f, 1));
             var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Trees/tree1");
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(unlitEffect),
@@ -499,7 +455,8 @@ namespace GD.App
             //game object
             var gameObject = new GameObject("Lady Roesia", ObjectType.Static,
                 RenderType.Transparent);
-            gameObject.Transform = new Transform(new Vector3(4,5, 1), null, new Vector3(-9, 2.4f, -11));  //World
+            gameObject.Transform = new Transform(new Vector3(2.5f,3.5f, 1),
+                null, new Vector3(-2, 6, -17));
             var texture = Content.Load<Texture2D>("Assets/Textures/Character/LadyRoshia_Finished_Fixed");
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(unlitEffect),
@@ -532,68 +489,236 @@ namespace GD.App
             Application.Player = playerGameObject;
         }
 
+        private void InitializeTowerModels()
+        {
+            //Tower Right
+            var gameObject = new GameObject("TowerModelRight",
+                ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.018f * Vector3.One,
+                new Vector3(11, 3, 0), new Vector3(3, 3, -18));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+            var model = Content.Load<Model>("Assets/Models/TowerV2");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+            sceneManager.ActiveScene.Add(gameObject);
+
+            //Tower Left
+            gameObject = new GameObject("TowerModelLeft",
+                ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.018f * Vector3.One,
+                new Vector3(11, 3f, 0), new Vector3(-6, 3, -18));
+            texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+            model = Content.Load<Model>("Assets/Models/TowerV2");
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+            sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void InitializeEntrance()
+        {
+            //game object
+            var gameObject = new GameObject("EntranceModel",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(11, 0, 0), new Vector3(-1.5f, 2, -17.5f));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+
+            var model = Content.Load<Model>("Assets/Models/Entrance");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+
+            var gameObject2 = new GameObject("EntranceModel2",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject2.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(11, 11, 0), new Vector3(-6, 2, -54));
+            var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject2.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh2));
+
+            sceneManager.ActiveScene.Add(gameObject2);
+        }
+
         private void InitializeWalls()
         {
-            GameObject cube = null;
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
-            var cubeMesh = new CubeMesh(_graphics.GraphicsDevice);
-            //int[] xVals = { 4,14,24,34,54 };
+            var gameObject = new GameObject("CastleWallNew",
+               ObjectType.Static, RenderType.Opaque);
+            var gameObject2 = new GameObject("CastleWallNew2",
+               ObjectType.Static, RenderType.Opaque);
+            var model = Content.Load<Model>("Assets/Models/CastleWall");
+            var smallerModel = Content.Load<Model>("Assets/Models/CastleWall02");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var smallerMesh = new Engine.ModelMesh(_graphics.GraphicsDevice, smallerModel);
+            var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
 
-            for (int i = 0; i < 6; i++)
-            {
-                cube = new GameObject("Castle wall front right" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(10, 10, 1),
-                    new Vector3(0, -3, 0), new Vector3(0 + (10 * i), 4, -15 - i));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                cube = new GameObject("Castle wall front left" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(10, 10, 1),
-                    null, new Vector3(-50 + (10 * i), 4, -15));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                cube = new GameObject("Castle wall south" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(1, 10, 10),
-                    null, new Vector3(-55, 4, -18 - (10 * i)));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
-            }
-            for (int i = 0; i < 4; i++)
-            {
-                cube = new GameObject("Castle wall west" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(1, 10, 10),
-                    new Vector3(0, 27, 0), new Vector3(-50 + (9 * i), 4, -54 - (3 * i)));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
-            }
-            for (int i = 0; i < 8; i++)
-            {
-                cube = new GameObject("Castle wall north west" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(1, 10, 10),
-                    new Vector3(0, -27, 0), new Vector3(-14 + (9 * i), 4, -63 + (3 * i)));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
-            }
+            //Left side
             for (int i = 0; i < 2; i++)
             {
-                cube = new GameObject("Castle wall north" + i, ObjectType.Static, RenderType.Opaque);
-                cube.Transform = new Transform(new Vector3(1, 10, 11),
-                    null, new Vector3(54, 4, -36 + (11 * i)));
-                var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-                cube.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1f, Color.Gray), cubeMesh));
-                sceneManager.ActiveScene.Add(cube);
+                gameObject = new GameObject("Castle wall front left" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 0, 0), new Vector3(-17-(18.9f*i), 2, -16));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            
+            //South side
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Castle wall south side" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 11, 0), new Vector3(-48.1f, 2, -30.8f - (18.9f * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
             }
 
+            //South west side
+            for (int i = 0; i < 3; i++)
+            {
+                gameObject = new GameObject("Castle wall south west side" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, -34, 0), new Vector3(-39f + (16 * i), 2, -68 - (10 * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            //Right side
+            for (int i = 0; i < 5; i++)
+            {
+                gameObject = new GameObject("Castle wall front right" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 0.18f, 0), new Vector3(15.1f + (18.5f * i), 2, -17 - (3.5f*i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            //North west side
+            for (int i = 0; i < 5; i++)
+            {
+                gameObject = new GameObject("Castle wall north west side" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 6, 0), new Vector3(12 + (18 * i), 2, -83 + (5f * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            //North side
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Castle wall north side" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 8, 0), new Vector3(98+(2.5f*i), 2, -63 + (18f * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            //Inside hall
+            for (int i = 0; i < 3; i++)
+            {
+                gameObject2 = new GameObject("Castle hall wall lol" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject2.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 4.7f, 0), new Vector3(-6.5f+(0.12f*i), 2, -20 - (11.2f * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject2.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                smallerMesh));
+                sceneManager.ActiveScene.Add(gameObject2);
+            }
+
+            //Inside hall
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Castle hall wall lol" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, 0, 0), new Vector3(-33f + (18.9f * i), 2, -54));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+        }
+
+        private void InitializeFloor()
+        {
+            //DOESN'T WORK
+            //var gameObject = new GameObject("CastleFloor",
+            //   ObjectType.Static, RenderType.Opaque);
+            //var model = Content.Load<Model>("Assets/Models/Floor03New");
+            //var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            //var texture = Content.Load<Texture2D>("Assets/Textures/Floors/Castle Set UV");
+
+            ////Left side
+            //for (int i = 0; i < 1; i++)
+            //{
+            //    gameObject = new GameObject("Castle Floor" + i, ObjectType.Static, RenderType.Opaque);
+            //    gameObject.Transform = new Transform(new Vector3(5, 5, 5),
+            //     new Vector3(0, 0, 0), new Vector3(0, 2, 0));
+            //    texture = Content.Load<Texture2D>("Assets/Textures/Floors/Castle Set UV");
+            //    gameObject.AddComponent(new Renderer(
+            //    new GDBasicEffect(effect),
+            //    new Material(texture, 1f, Color.White),
+            //    mesh));
+            //    sceneManager.ActiveScene.Add(gameObject);
+            //}
+
+            //game object
+            var cubeMesh = new CubeMesh(_graphics.GraphicsDevice);
+            var gameObject = new GameObject("CastleFloor", ObjectType.Static, RenderType.Opaque);
+            var texture = Content.Load<Texture2D>("Assets/Textures/Floors/FloorTiles");
+            for (int i = 0; i < 1; i++)
+            {
+                gameObject = new GameObject("Castle floor" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(new Vector3(2.4f, 0.2f, 8),
+                null, new Vector3(-1.5f, 0, -19.5f));
+                texture = Content.Load<Texture2D>("Assets/Textures/Floors/FloorTiles");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.DarkGray), cubeMesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
         }
 
         private void InitializeSkyBoxAndGround(float worldScale)
