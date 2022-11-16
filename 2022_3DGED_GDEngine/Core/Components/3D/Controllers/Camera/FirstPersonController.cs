@@ -74,9 +74,7 @@ namespace GD.Engine
 
         protected virtual void HandleMouseInput(GameTime gameTime)
         {
-            in.x.ax = 2;
-            int86(51, &in, &out);
-
+            
             rotation = Vector3.Zero;
             var delta = Input.Mouse.Delta;
 
