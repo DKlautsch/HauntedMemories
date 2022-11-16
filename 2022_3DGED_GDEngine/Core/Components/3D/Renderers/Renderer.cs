@@ -39,7 +39,7 @@ namespace GD.Engine
             effect.Apply();
 
             //draw the object
-            mesh.Draw(graphicsDevice);
+            mesh.Draw(graphicsDevice, effect, transform, camera, material);
         }
 
         #endregion Actions - Draw
