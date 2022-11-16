@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
+
 namespace GD.Engine
 {
     /// <summary>
@@ -73,6 +74,7 @@ namespace GD.Engine
 
         protected virtual void HandleMouseInput(GameTime gameTime)
         {
+            
             rotation = Vector3.Zero;
             var delta = Input.Mouse.Delta;
 
@@ -81,6 +83,12 @@ namespace GD.Engine
                 //Q - where are X and Y reversed?
                 rotation.Y -= delta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
                 rotation.X -= delta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
+
+                rotation.X = rotation.X < -1.5 ? -1.50f : rotation.X;
+                rotation.X = rotation.X > 1.5 ? 1.50f : rotation.X;
+
+
+
                 transform.SetRotation(rotation);
             }
         }
