@@ -1802,35 +1802,35 @@ namespace GD.App
             quad = new GameObject("skybox back face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), null, new Vector3(0, 0, -halfWorldScale));
             var texture = Content.Load<Texture2D>("Assets/Textures/Skybox/back");
-            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1, Color.DarkBlue), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - left face
             quad = new GameObject("skybox left face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(90), 0), new Vector3(-halfWorldScale, 0, 0));
             texture = Content.Load<Texture2D>("Assets/Textures/Skybox/left");
-            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1, Color.DarkBlue), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - right face
             quad = new GameObject("skybox right face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(-90), 0), new Vector3(halfWorldScale, 0, 0));
             texture = Content.Load<Texture2D>("Assets/Textures/Skybox/right");
-            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1, Color.DarkBlue), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - top face
             quad = new GameObject("skybox top face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(MathHelper.ToRadians(90), MathHelper.ToRadians(-90), 0), new Vector3(0, halfWorldScale, 0));
             texture = Content.Load<Texture2D>("Assets/Textures/Skybox/sky");
-            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1, Color.DarkBlue), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - front face
             quad = new GameObject("skybox front face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(-180), 0), new Vector3(0, 0, halfWorldScale));
             texture = Content.Load<Texture2D>("Assets/Textures/Skybox/front");
-            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+            quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1, Color.DarkBlue), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //ground
