@@ -1509,14 +1509,25 @@ namespace GD.App
 
             //Murder window
             var gameObject6 = new GameObject("MurderWindowArch");
-            gameObject6.Transform = new Transform(new Vector3(0.02f, 0.03f, 0.03f),
-                new Vector3(11, 33, 0), new Vector3(-7, 9, -39));
+            gameObject6.Transform = new Transform(0.025f * Vector3.One,
+                new Vector3(11, 33, 0), new Vector3(-6, 9, -39));
             var mesh6 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject6.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.White),
                 mesh6));
             sceneManager.ActiveScene.Add(gameObject6);
+            var windowPane = new GameObject("WindowPane",
+               ObjectType.Static, RenderType.Opaque);
+            windowPane.Transform = new Transform(new Vector3(4, 0.5f, 5),
+                new Vector3(11, 33, 0), new Vector3(-4, 9, -39));
+            var texture2 = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var windowMesh = new Engine.CubeMesh(_graphics.GraphicsDevice);
+            windowPane.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture2, 1f, Color.White),
+                windowMesh));
+            sceneManager.ActiveScene.Add(windowPane);
         }
 
         private void InitializeStairs()
@@ -1642,26 +1653,22 @@ namespace GD.App
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
-            //var gameObject3 = new GameObject("CastleWall temp cube",
-            //   ObjectType.Static, RenderType.Opaque);
-            //var cubeWall = new Engine.CubeMesh(_graphics.GraphicsDevice);
-            //var texture2 = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
-            //for (int i = 0; i < 1; i++)
-            //{
-            //    gameObject3 = new GameObject("Castle wall above entrance kitchen 0" + i, ObjectType.Static, RenderType.Opaque);
-            //    gameObject3.Transform = new Transform(new Vector3(4,3,9),
-            //     new Vector3(11, 0, 0), new Vector3(12, 9, -58));
-            //    gameObject3.AddComponent(new Renderer(
-            //    new GDBasicEffect(effect),
-            //    new Material(texture2, 1f, Color.DarkGray),
-            //    cubeWall));
-            //    sceneManager.ActiveScene.Add(gameObject3);
-            //}
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle wall above entrance kitchen 0" + i, ObjectType.Static, RenderType.Opaque);
                 gameObject.Transform = new Transform(new Vector3(0.01f, 0.027f, 0.048f),
                  new Vector3(11, 0.1f, 0), new Vector3(12+(34*i), 9, -54.8f - (4.5f*i)));
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                gameObject = new GameObject("Castle wall above entrance hall 0" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(new Vector3(0.01f, 0.027f, 0.048f),
+                 new Vector3(11, 11, 0), new Vector3(-8.5f, 9, -53.5f));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f),
