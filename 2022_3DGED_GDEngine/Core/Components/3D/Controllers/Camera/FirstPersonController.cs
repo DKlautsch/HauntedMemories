@@ -65,7 +65,7 @@ namespace GD.Engine
             else if (Input.Keys.IsPressed(Keys.D))
                 translation += transform.World.Right * strafeSpeed * gameTime.ElapsedGameTime.Milliseconds;
 
-            if (isGrounded)
+           if (isGrounded)
                 translation.Y = 0;
 
             //actually apply the movement

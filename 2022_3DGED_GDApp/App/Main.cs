@@ -96,7 +96,7 @@ namespace GD.App
             InitializeEngine(AppData.APP_RESOLUTION, true, true);
 
             //game specific content
-            InitializeLevel("My Amazing Game", AppData.SKYBOX_WORLD_SCALE);
+            InitializeLevel("Haunted Memories", AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
@@ -134,9 +134,6 @@ namespace GD.App
 
             //add drawn stuff
             InitializeDrawnContent(worldScale);
-
-            //add the player
-            InitializePlayer();
         }
 
         private void SetTitle(string title)
@@ -155,7 +152,7 @@ namespace GD.App
         private void LoadSounds()
         {
             var soundEffect =
-                Content.Load<SoundEffect>("Assets/Audio/Diegetic/GrassFootsteps");
+                Content.Load<SoundEffect>("Assets/Audio/Diegetic/GrassFootsteps-2");
 
             //add the new sound effect
             soundManager.Add(new Cue(
@@ -329,6 +326,7 @@ namespace GD.App
             InitializeFloors();
             InitializeTowerModels();
             InitializeEntrance();
+            InitializeStairs();
 
             //Filler Models
             InitializeWell();
@@ -345,7 +343,14 @@ namespace GD.App
             InitializeWheetBags();
             InitializeTorches();
             InitializeBench();
-            InitializeTreeQuad();
+            InitializeRollingPin();
+            InitializeKitchenBoard();
+            InitializeKitchenKnife();
+            InitializeKitchenPot();
+            InitializeKitchenPlate();
+            InitializeSpoon();
+            InitializeMilk();
+            InitializeStove();
 
             //Important Quest Models
             InitializeToolbox();
@@ -353,6 +358,134 @@ namespace GD.App
 
             //Character
             InitializeLadyRoesia(); 
+        }
+
+        private void InitializeStove()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/Stove_C");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/StoveModelV2");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var stove = new GameObject("Stove",
+                ObjectType.Static, RenderType.Opaque);
+            stove.Transform = new Transform(0.4f * Vector3.One,
+                new Vector3(0, 3.7f, 0), new Vector3(-3, 0, -82.4f));
+            stove.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.Silver),
+                mesh));
+            sceneManager.ActiveScene.Add(stove);
+        }
+
+        private void InitializeMilk()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/Milk");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var milk = new GameObject("Milk",
+                ObjectType.Static, RenderType.Opaque);
+            milk.Transform = new Transform(0.11f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(5, 1.5f, -86));
+            milk.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.Silver),
+                mesh));
+            sceneManager.ActiveScene.Add(milk);
+        }
+
+        private void InitializeSpoon()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/Spoon");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var spoon = new GameObject("Spoon",
+                ObjectType.Static, RenderType.Opaque);
+            spoon.Transform = new Transform(0.1f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(7, 1.52f, -84));
+            spoon.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.Silver),
+                mesh));
+            sceneManager.ActiveScene.Add(spoon);
+        }
+
+        private void InitializeKitchenPlate()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/PotteryVase");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/DeepPlate");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var plate = new GameObject("KitchenPlate",
+                ObjectType.Static, RenderType.Opaque);
+            plate.Transform = new Transform(0.15f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(6, 1.5f, -85));
+            plate.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+            sceneManager.ActiveScene.Add(plate);
+        }
+
+        private void InitializeKitchenPot()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/DeepPot");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var pot = new GameObject("KitchenPot",
+                ObjectType.Static, RenderType.Opaque);
+            pot.Transform = new Transform(0.1f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(10.5f, 1.5f, -84.2f));
+            pot.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.Silver),
+                mesh));
+            sceneManager.ActiveScene.Add(pot);
+        }
+
+        private void InitializeKitchenKnife()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/Knife");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var knife = new GameObject("KitchenKnife",
+                ObjectType.Static, RenderType.Opaque);
+            knife.Transform = new Transform(0.13f * Vector3.One,
+                new Vector3(0, 1.2f, 0), new Vector3(11.2f, 1.57f, -83));
+            knife.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.DimGray),
+                mesh));
+            sceneManager.ActiveScene.Add(knife);
+        }
+
+        private void InitializeKitchenBoard()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/Board");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var board = new GameObject("Board",
+                ObjectType.Static, RenderType.Opaque);
+            board.Transform = new Transform(0.15f * Vector3.One,
+                new Vector3(0, 1.3f, 0), new Vector3(11.3f, 1.56f, -83.3f));
+            board.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.BurlyWood),
+                mesh));
+            sceneManager.ActiveScene.Add(board);
+        }
+
+        private void InitializeRollingPin()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/RollingPin");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var rollingPin = new GameObject("RollingPin",
+                ObjectType.Static, RenderType.Opaque);
+            rollingPin.Transform = new Transform(0.1f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(12.7f, 1.6f, -83));
+            rollingPin.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.BurlyWood),
+                mesh));
+            sceneManager.ActiveScene.Add(rollingPin);
         }
 
         //Placed and textured
@@ -673,11 +806,11 @@ namespace GD.App
             {
                 var chair01 = new GameObject("KitchenChair0"+i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.013f * Vector3.One,
-                    new Vector3(0, 11, 0), new Vector3(9+(2*i), 0, -70));
+                chair01.Transform = new Transform(0.012f * Vector3.One,
+                    new Vector3(0, 11, 0), new Vector3(7+(2*i), 0, -70));
                 chair01.AddComponent(new Renderer(
                     new GDBasicEffect(effect),
-                    new Material(texture, 1f, Color.White),
+                    new Material(texture, 1f, Color.BurlyWood),
                     mesh));
                 sceneManager.ActiveScene.Add(chair01);
             }
@@ -686,11 +819,37 @@ namespace GD.App
             {
                 var chair01 = new GameObject("KitchenChairOtherSide0"+i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.013f * Vector3.One,
-                    new Vector3(0, 33, 0), new Vector3(9 + (2 * i), 0, -74));
+                chair01.Transform = new Transform(0.012f * Vector3.One,
+                    new Vector3(0, 33, 0), new Vector3(7 + (2 * i), 0, -74));
                 chair01.AddComponent(new Renderer(
                     new GDBasicEffect(effect),
-                    new Material(texture, 1f, Color.White),
+                    new Material(texture, 1f, Color.BurlyWood),
+                    mesh));
+                sceneManager.ActiveScene.Add(chair01);
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                var chair01 = new GameObject("KitchenChairV20" + i,
+                ObjectType.Static, RenderType.Opaque);
+                chair01.Transform = new Transform(0.012f * Vector3.One,
+                    new Vector3(0, 11, 0), new Vector3(11 + (2 * i), 0, -70));
+                chair01.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f, Color.BurlyWood),
+                    mesh));
+                sceneManager.ActiveScene.Add(chair01);
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                var chair01 = new GameObject("KitchenChairOtherSideV20" + i,
+                ObjectType.Static, RenderType.Opaque);
+                chair01.Transform = new Transform(0.012f * Vector3.One,
+                    new Vector3(0, 33, 0), new Vector3(11 + (2 * i), 0, -74));
+                chair01.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f, Color.BurlyWood),
                     mesh));
                 sceneManager.ActiveScene.Add(chair01);
             }
@@ -825,8 +984,8 @@ namespace GD.App
         {
             var gameObject = new GameObject("MugModel",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.03f * Vector3.One,
-                new Vector3(0, 1, 0), new Vector3(9, 1.6f, -71.4f));
+            gameObject.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(0, 1, 0), new Vector3(9, 1.5f, -71.4f));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/Mug_BaseColor");
             var model = Content.Load<Model>("Assets/Models/Kitchen/Mug");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
@@ -871,6 +1030,42 @@ namespace GD.App
                 new Material(texture, 1f, Color.SaddleBrown),
                 mesh));
             sceneManager.ActiveScene.Add(treeV1_03);
+            var treeV1_04 = new GameObject("TreeModel04",
+                ObjectType.Static, RenderType.Opaque);
+            treeV1_04.Transform = new Transform(0.07f * Vector3.One,
+               new Vector3(0, 3, 0), new Vector3(89, 0, -57));
+            treeV1_04.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.SaddleBrown),
+                mesh));
+            sceneManager.ActiveScene.Add(treeV1_04);
+            var treeV1_05 = new GameObject("TreeModel05",
+               ObjectType.Static, RenderType.Opaque);
+            treeV1_05.Transform = new Transform(0.07f * Vector3.One,
+               new Vector3(0, 3, 0), new Vector3(59, 0, -60));
+            treeV1_05.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.SaddleBrown),
+                mesh));
+            sceneManager.ActiveScene.Add(treeV1_05);
+            var treeV1_06 = new GameObject("TreeModel06",
+               ObjectType.Static, RenderType.Opaque);
+            treeV1_06.Transform = new Transform(0.07f * Vector3.One,
+               new Vector3(0, 6, 0), new Vector3(57, 0, -53));
+            treeV1_06.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.SaddleBrown),
+                mesh));
+            sceneManager.ActiveScene.Add(treeV1_06);
+            var treeV1_07 = new GameObject("TreeModel07",
+               ObjectType.Static, RenderType.Opaque);
+            treeV1_07.Transform = new Transform(0.07f * Vector3.One,
+               new Vector3(0, 9, 0), new Vector3(44, 0, -32));
+            treeV1_07.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.SaddleBrown),
+                mesh));
+            sceneManager.ActiveScene.Add(treeV1_07);
 
             // Tree Model 2
             var treeV2_01 = new GameObject("TreeModelV201",
@@ -894,6 +1089,15 @@ namespace GD.App
                 new Material(textureV2, 1f, Color.Gray),
                 meshV2));
             sceneManager.ActiveScene.Add(treeV2_02);
+            var treeV2_03 = new GameObject("TreeModelV203",
+              ObjectType.Static, RenderType.Opaque);
+            treeV2_03.Transform = new Transform(0.06f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(84, 0, -60));
+            treeV2_03.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV2, 1f, Color.Gray),
+                meshV2));
+            sceneManager.ActiveScene.Add(treeV2_03);
 
             // Tree Model 3
             var treeV3_01 = new GameObject("TreeModelV301",
@@ -917,6 +1121,24 @@ namespace GD.App
                 new Material(textureV3, 1f, Color.SandyBrown),
                 meshV3));
             sceneManager.ActiveScene.Add(treeV3_02);
+            var treeV3_03 = new GameObject("TreeModelV303",
+           ObjectType.Static, RenderType.Opaque);
+            treeV3_03.Transform = new Transform(0.06f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(50, 0, -58));
+            treeV3_03.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV3, 1f, Color.SandyBrown),
+                meshV3));
+            sceneManager.ActiveScene.Add(treeV3_03);
+            var treeV3_04 = new GameObject("TreeModelV304",
+           ObjectType.Static, RenderType.Opaque);
+            treeV3_04.Transform = new Transform(0.06f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(40, 0, -33));
+            treeV3_04.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV3, 1f, Color.SandyBrown),
+                meshV3));
+            sceneManager.ActiveScene.Add(treeV3_04);
 
             // Tree Model 4
             var treeV4_01 = new GameObject("TreeModelV401",
@@ -940,7 +1162,24 @@ namespace GD.App
                 new Material(textureV4, 1f, Color.RosyBrown),
                 meshV4));
             sceneManager.ActiveScene.Add(treeV4_02);
-
+            var treeV4_03 = new GameObject("TreeModelV403",
+          ObjectType.Static, RenderType.Opaque);
+            treeV4_03.Transform = new Transform(0.06f * Vector3.One,
+                new Vector3(0, 7, 0), new Vector3(54, 0, -54));
+            treeV4_03.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV4, 1f, Color.RosyBrown),
+                meshV4));
+            sceneManager.ActiveScene.Add(treeV4_03);
+            var treeV4_04 = new GameObject("TreeModelV404",
+                ObjectType.Static, RenderType.Opaque);
+            treeV4_04.Transform = new Transform(0.06f * Vector3.One,
+                new Vector3(0, 10, 0), new Vector3(47, 0, -34));
+            treeV4_04.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV4, 1f, Color.RosyBrown),
+                meshV4));
+            sceneManager.ActiveScene.Add(treeV4_04);
         }
 
         //Placed few in garden, only basic texture applied, but could leave it as it's just
@@ -998,7 +1237,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.005f * Vector3.One,
-                new Vector3(0, 1.2f, 0), new Vector3(11.3f, 1.62f, -71.5f));  
+                new Vector3(0, 1.2f, 0), new Vector3(13, 1.5f, -71.8f));  
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.Orange),
@@ -1008,7 +1247,7 @@ namespace GD.App
             var gameObject2 = new GameObject("ClipboardModel02",
               ObjectType.Static, RenderType.Opaque);
             gameObject2.Transform = new Transform(0.005f * Vector3.One,
-                new Vector3(0, 10, 0), new Vector3(83, 0.71f, -45.3f));
+                new Vector3(0, 10, 0), new Vector3(83, 0.94f, -45.3f));
             var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject2.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
@@ -1022,10 +1261,10 @@ namespace GD.App
         {
             var gameObject = new GameObject("BenchModel",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.32f * Vector3.One,
+            gameObject.Transform = new Transform(0.04f * Vector3.One,
                 new Vector3(0, 4.5f, 0), new Vector3(83, 0, -46));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
-            var model = Content.Load<Model>("Assets/Models/Garden/Bench");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/Bench_albedo");
+            var model = Content.Load<Model>("Assets/Models/Garden/BenchV2");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
@@ -1039,16 +1278,36 @@ namespace GD.App
         {
             var gameObject = new GameObject("TableModel",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.2f * Vector3.One,
-                new Vector3(0, 7.9f, 0), new Vector3(8, 0, -72));
             var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
-            var model = Content.Load<Model>("Assets/Models/Kitchen/Table");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/BetterTable");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.LightGray),
                 mesh));
-            sceneManager.ActiveScene.Add(gameObject);
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Table0" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.14f * Vector3.One,
+                new Vector3(0, 7.9f, 0), new Vector3(8+(4*i), 0, -72-(0.2f*i)));
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.WhiteSmoke),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Counter0" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.14f * Vector3.One,
+                new Vector3(0, 7.6f, 0), new Vector3(6 + (5.7f * i), 0, -85+(1.5f*i)));
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.WhiteSmoke),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
         }
 
         //Placed in garden, NOT TEXTURED YET!
@@ -1068,21 +1327,6 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
         }
 
-        //TEMP
-        private void InitializeTreeQuad()
-        {
-            var gameObject = new GameObject("my first tree", ObjectType.Static,
-                RenderType.Transparent);
-            gameObject.Transform = new Transform(new Vector3(3, 3, 1),
-                null, new Vector3(-5, 1.5f, 1));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/2D/Trees/tree1");
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                new QuadMesh(_graphics.GraphicsDevice)));
-            sceneManager.ActiveScene.Add(gameObject);
-        }
-
         //Character 2D sprite, TEMP as player does not encounter till end game
         private void InitializeLadyRoesia()
         {
@@ -1096,31 +1340,17 @@ namespace GD.App
                 new Material(texture, 1),
                 new QuadMesh(_graphics.GraphicsDevice)));
             sceneManager.ActiveScene.Add(gameObject);
-        }
 
-        //TEMP as our game is first person
-        private void InitializePlayer()
-        {
-            playerGameObject = new GameObject("player 1", ObjectType.Static, RenderType.Opaque);
-
-            playerGameObject.Transform = new Transform(new Vector3(0.4f, 0.4f, 1),
-                null, new Vector3(0, 0.2f, -2));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
-            var model = Content.Load<Model>("Assets/Models/Other/sphere");
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-
-            playerGameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
-                new Material(texture, 1),
-                mesh));
-
-            playerGameObject.AddComponent(new PlayerController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, true));
-
-            sceneManager.ActiveScene.Add(playerGameObject);
-
-            //set this as active player
-            Application.Player = playerGameObject;
-        }
+            //var gameObject2 = new GameObject("Lady Roesia2", ObjectType.Static,
+            //  RenderType.Transparent);
+            //gameObject.Transform = new Transform(new Vector3(2.5f, 3.5f, 1),
+            //    null, new Vector3(-2, 6, -60));
+            //gameObject.AddComponent(new Renderer(
+            //    new GDBasicEffect(unlitEffect),
+            //    new Material(texture, 1),
+            //    new QuadMesh(_graphics.GraphicsDevice)));
+            //sceneManager.ActiveScene.Add(gameObject);
+        }       
 
         //Placed, scaled and textured :)
         private void InitializeTowerModels()
@@ -1233,6 +1463,41 @@ namespace GD.App
                 mesh4));
 
             sceneManager.ActiveScene.Add(gameObject4);
+
+            //Entrance to Kitchen from garden door 2
+
+            var gameObject5 = new GameObject("EntranceModel5",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject5.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(11, 0.1f, 0), new Vector3(45, 2, -63f));
+            var mesh5 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject5.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh5));
+
+            sceneManager.ActiveScene.Add(gameObject5);
+        }
+
+        private void InitializeStairs()
+        {
+            var gameObject = new GameObject("StairsModel",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(11, 33, 0), new Vector3(-10, 2, -24));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Set UV");
+
+            var model = Content.Load<Model>("Assets/Models/MainStructure/Stairs");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
         }
 
         //Placed, scaled, textured, but need to add more for upstairs
@@ -1429,14 +1694,38 @@ namespace GD.App
                 new Material(texture, 1f, Color.White),
                 smallerMesh));
                 sceneManager.ActiveScene.Add(gameObject);
-            }
+            }            
 
             // kitchen walls, north west
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle hall kitchen NW 0"+ i, ObjectType.Static, RenderType.Opaque);
                 gameObject.Transform = new Transform(0.035f * Vector3.One,
                  new Vector3(11, -3, 0), new Vector3(22 + (18.7f * i), 2, -63.5f - (2.8f*i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = new GameObject("Castle hall kitchen NW 0" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, -3-(3.1f*i), 0), new Vector3(33.7f + (23f * i), 2, -61f - (4f * i)));
+                texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+                gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                smallerMesh));
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                gameObject = new GameObject("Castle hall kitchen NW 0" + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.035f * Vector3.One,
+                 new Vector3(11, -3 - (3.1f * i), 0), new Vector3(66f + (23f * i), 2, -70.5f - (4f * i)));
                 texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
@@ -1688,7 +1977,8 @@ namespace GD.App
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D))
+            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
                 Application.SoundManager.Resume("boom1");
             else
                 Application.SoundManager.Pause("boom1");
