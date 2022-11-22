@@ -236,6 +236,11 @@ namespace GD.App
             effect.EnableDefaultLighting();
             effect.SpecularPower = 200;
             effect.AmbientLightColor = Color.DarkBlue.ToVector3();
+
+            effect.DirectionalLight0.SpecularColor = Color.Black.ToVector3();
+            effect.DirectionalLight2.SpecularColor = Color.Black.ToVector3();
+            effect.DirectionalLight2.Direction = new Vector3(0.75f, 0.1f, 0);
+            effect.DirectionalLight2.DiffuseColor = Color.DarkOrange.ToVector3();
         }
 
         private void InitializeCameras()
