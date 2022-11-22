@@ -104,6 +104,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Fonts/Perf.spritefont
 
+#begin Assets/GameLogo_New.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/GameLogo_New.png
+
 #begin Assets/Models/Garden/Bench.fbx
 /importer:FbxImporter
 /processor:ModelProcessor

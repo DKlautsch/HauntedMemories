@@ -237,7 +237,7 @@ namespace GD.App
 
             //camera 1
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
-            cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
+            cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION * new Vector3(1, 1.2f, 1));
             cameraGameObject.AddComponent(
                 new Camera(
                 AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
@@ -1341,15 +1341,15 @@ namespace GD.App
                 new QuadMesh(_graphics.GraphicsDevice)));
             sceneManager.ActiveScene.Add(gameObject);
 
-            //var gameObject2 = new GameObject("Lady Roesia2", ObjectType.Static,
-            //  RenderType.Transparent);
-            //gameObject.Transform = new Transform(new Vector3(2.5f, 3.5f, 1),
-            //    null, new Vector3(-2, 6, -60));
-            //gameObject.AddComponent(new Renderer(
-            //    new GDBasicEffect(unlitEffect),
-            //    new Material(texture, 1),
-            //    new QuadMesh(_graphics.GraphicsDevice)));
-            //sceneManager.ActiveScene.Add(gameObject);
+            var gameObject2 = new GameObject("Lady Roesia2", ObjectType.Static,
+              RenderType.Transparent);
+            gameObject2.Transform = new Transform(new Vector3(2.5f, 3.5f, 1),
+                null, new Vector3(13, 1.7f, -69));
+            gameObject2.AddComponent(new Renderer(
+                new GDBasicEffect(unlitEffect),
+                new Material(texture, 1),
+                new QuadMesh(_graphics.GraphicsDevice)));
+            sceneManager.ActiveScene.Add(gameObject2);
         }       
 
         //Placed, scaled and textured :)
@@ -1478,6 +1478,17 @@ namespace GD.App
                 mesh5));
 
             sceneManager.ActiveScene.Add(gameObject5);
+
+            //Murder window
+            var gameObject6 = new GameObject("MurderWindowArch");
+            gameObject6.Transform = new Transform(new Vector3(0.02f, 0.03f, 0.03f),
+                new Vector3(11, 33, 0), new Vector3(-7, 9, -39));
+            var mesh6 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject6.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.White),
+                mesh6));
+            sceneManager.ActiveScene.Add(gameObject6);
         }
 
         private void InitializeStairs()
@@ -1670,9 +1681,9 @@ namespace GD.App
             //Upstairs north wall
             for (int i = 0; i < 2; i++)
             {
-                gameObject = new GameObject("Castle hall upstairs north 0"+ i, ObjectType.Static, RenderType.Opaque);
+                gameObject = new GameObject("Castle hall upstairs north 0" + i, ObjectType.Static, RenderType.Opaque);
                 gameObject.Transform = new Transform(0.035f * Vector3.One,
-                 new Vector3(11, 11, 0), new Vector3(-10.3f, 9, -30 - (18.9f * i)));
+                 new Vector3(11, 11, 0), new Vector3(-10.3f, 9, -28 - (22f * i)));
                 texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
@@ -1680,6 +1691,7 @@ namespace GD.App
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
 
             // Kitchen walls (Smaller wall with skewed texture on one side, so I had to rotate it so the other wall
             // woudl cover up the isssue. Tried fixing it in Maya but dispite my efforts it still appeared skewed.)
@@ -1768,7 +1780,7 @@ namespace GD.App
             {
                 gameObject2 = new GameObject("Castle hall main hall 0"+ i, ObjectType.Static, RenderType.Opaque);
                 gameObject2.Transform = new Transform(new Vector3(34.7f, 0.1f, 38f),
-                  new Vector3(0, 0, 0), new Vector3(-25, 0+(7*i), -40));
+                  new Vector3(0, 0, 0), new Vector3(-25, 0+(6*i), -40));
                 gameObject2.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture2, 1f, Color.White),
