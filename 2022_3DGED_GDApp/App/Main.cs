@@ -162,7 +162,33 @@ namespace GD.App
                 new Vector3(1, 1, 0),
                 true));
             soundManager.Play2D("boom1");
-        
+
+            soundEffect =
+             Content.Load<SoundEffect>("Assets/Audio/Diegetic/Better-Tile-Walk-4");
+
+            //add the new sound effect
+            soundManager.Add(new Cue(
+                "boom2",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.3f, 0.5f, 0),
+                true));
+            soundManager.Play2D("boom2");
+            Application.SoundManager.Pause("boom2");
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Wood_Running_1.1_-2-2");
+
+            //add the new sound effect
+            soundManager.Add(new Cue(
+                "boom3",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0.5f, 0),
+                true));
+            soundManager.Play2D("boom3");
+            Application.SoundManager.Pause("boom3");
+
         }
 
         private void LoadTextures()
@@ -1962,9 +1988,35 @@ namespace GD.App
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
-                || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+            if (cameraManager.activeCamera.transform.translation.Z <= -56)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom3");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom2");
+                }
+                else
+                    Application.SoundManager.Pause("boom3");
+            else if (cameraManager.activeCamera.transform.translation.Z >= -56 && cameraManager.activeCamera.transform.translation.Z <= -20 && cameraManager.activeCamera.transform.translation.X <= -7)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom2");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom3");
+                }
+                else
+                    Application.SoundManager.Pause("boom2");
+
+            else
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+            {
                 Application.SoundManager.Resume("boom1");
+                Application.SoundManager.Pause("boom3");
+                Application.SoundManager.Pause("boom2");
+            }
             else
                 Application.SoundManager.Pause("boom1");
 
