@@ -116,6 +116,44 @@
 /processorParam:TextureFormat=Color
 /build:Assets/GameLogo_New.png
 
+#begin Assets/Models/Garden/ancient_key.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Garden/ancient_key.fbx
+
+#begin Assets/Models/Garden/Barrel.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Garden/Barrel.fbx
+
 #begin Assets/Models/Garden/Bench.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -248,6 +286,25 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Garden/CartWheelPart.fbx
+
+#begin Assets/Models/Garden/CombatDummy.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Garden/CombatDummy.fbx
 
 #begin Assets/Models/Garden/dryBigLeavesTree.fbx
 /importer:FbxImporter
@@ -401,6 +458,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Garden/grassV3.fbx
 
+#begin Assets/Models/Garden/LargeBarrel.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Garden/LargeBarrel.fbx
+
 #begin Assets/Models/Garden/littleGrassV2.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -438,6 +514,25 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Garden/LittleLeavesShrubV2.fbx
+
+#begin Assets/Models/Garden/medival_WC.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Garden/medival_WC.fbx
 
 #begin Assets/Models/Garden/Old_Well.fbx
 /importer:FbxImporter
@@ -553,6 +648,44 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Garden/treeV2.fbx
 
+#begin Assets/Models/Hall/LoungeSofa.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Hall/LoungeSofa.fbx
+
+#begin Assets/Models/Hall/Table.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Hall/Table.fbx
+
 #begin Assets/Models/Kitchen/BagOfWheetV2.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -648,7 +781,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Kitchen/Board.fbx
 
-#begin Assets/Models/Kitchen/BucketV2.fbx
+#begin Assets/Models/Kitchen/Candle_low.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -665,7 +798,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Kitchen/BucketV2.fbx
+/build:Assets/Models/Kitchen/Candle_low.fbx
 
 #begin Assets/Models/Kitchen/Chair_02.fbx
 /importer:FbxImporter
@@ -838,6 +971,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Kitchen/RectBoxV2.fbx
 
+#begin Assets/Models/Kitchen/RegularBucketV2.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Kitchen/RegularBucketV2.fbx
+
 #begin Assets/Models/Kitchen/RollingPin.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1008,6 +1160,44 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Kitchen/VaseV2.fbx
+
+#begin Assets/Models/MainStructure/anim_door.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/MainStructure/anim_door.fbx
+
+#begin Assets/Models/MainStructure/anim_doorOpen.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/MainStructure/anim_doorOpen.fbx
 
 #begin Assets/Models/MainStructure/CastleWall.fbx
 /importer:FbxImporter
@@ -1635,6 +1825,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Foliage/3D/PlainColourTexture.png
 
+#begin Assets/Textures/Foliage/3D/ShrubTexture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Foliage/3D/ShrubTexture.png
+
 #begin Assets/Textures/Props/Crates/crate1.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1658,6 +1860,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Crates/crate2.jpg
+
+#begin Assets/Textures/Props/Garden/barrel_M_Barrel_BaseColor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Garden/barrel_M_Barrel_BaseColor.png
 
 #begin Assets/Textures/Props/Garden/Bench_albedo.jpg
 /importer:TextureImporter
@@ -1695,6 +1909,54 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Garden/CartWheel.png
 
+#begin Assets/Textures/Props/Garden/DefaultMaterial_Base_Color.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Garden/DefaultMaterial_Base_Color.png
+
+#begin Assets/Textures/Props/Garden/Dummy_BaseColor_compressed.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Garden/Dummy_BaseColor_compressed.jpg
+
+#begin Assets/Textures/Props/Garden/key_albedo.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Garden/key_albedo.jpg
+
+#begin Assets/Textures/Props/Garden/LargeBarrel.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Garden/LargeBarrel.png
+
 #begin Assets/Textures/Props/Garden/torch.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1707,6 +1969,30 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Garden/torch.png
 
+#begin Assets/Textures/Props/Hall/initialShadingGroup_albedo.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Hall/initialShadingGroup_albedo.jpg
+
+#begin Assets/Textures/Props/Hall/wood_table_001_diff_1k.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Hall/wood_table_001_diff_1k.jpg
+
 #begin Assets/Textures/Props/Kitchen/Appliances UV New.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1718,6 +2004,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Kitchen/Appliances UV New.png
+
+#begin Assets/Textures/Props/Kitchen/Candle_low_Candle01_BaseColor.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Kitchen/Candle_low_Candle01_BaseColor.png
 
 #begin Assets/Textures/Props/Kitchen/linenBagClosed.png
 /importer:TextureImporter
@@ -1791,6 +2089,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Kitchen/OpenLinenBag.png
 
+#begin Assets/Textures/Props/Kitchen/OpenOldBucket.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Kitchen/OpenOldBucket.png
+
 #begin Assets/Textures/Props/Kitchen/PotteryVase.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1851,6 +2161,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Kitchen/table3.png
 
+#begin Assets/Textures/Props/Kitchen/tableV2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Kitchen/tableV2.png
+
 #begin Assets/Textures/Props/Kitchen/Texture.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1862,6 +2184,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Kitchen/Texture.png
+
+#begin Assets/Textures/Props/Other/DefaultMaterial_albedo.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Other/DefaultMaterial_albedo.jpg
 
 #begin Assets/Textures/Props/Other/tv.png
 /importer:TextureImporter

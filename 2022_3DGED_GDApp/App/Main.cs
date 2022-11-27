@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Reflection;
+using System.Threading;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -355,43 +356,282 @@ namespace GD.App
             InitializeSkyBoxAndGround(worldScale);
 
             //Big Stuctures
+            InitializeDoors();
             InitializeWalls();
             InitializeFloors();
-            InitializeTowerModels();
-            InitializeEntrance();
             InitializeStairs();
+            InitializeEntrance();
+            InitializeTowerModels();
 
-            //Filler Models
-            InitializeWell();
-            InitializeTable();
-            InitializeRock();
-            InitializeMug();
-            InitializeTrees();
-            InitializeGrassModels();
-            InitializeShrubs();
-            InitializeBarrelsBoxes();
-            InitializeKitchenChairs();
-            InitializeKitchenVase();
-            InitializeCarrige();
-            InitializeWheetBags();
-            InitializeTorches();
-            InitializeBench();
-            InitializeRollingPin();
-            InitializeKitchenBoard();
-            InitializeKitchenKnife();
-            InitializeKitchenPot();
-            InitializeKitchenPlate();
+            /* Filler Models */
+
+            //Kitchen               
+            InitializeMug();  
+            InitializeMilk();  
+            InitializeStove();        
+            InitializeBoxes();
             InitializeSpoon();
-            InitializeMilk();
-            InitializeStove();
+            InitializeTable();
+            InitializeWheetBags();  
+            InitializeKitchenPot();                    
+            InitializeRollingPin();            
+            InitializeKitchenVase(); 
+            InitializeKitchenBoard();
+            InitializeKitchenKnife();            
+            InitializeKitchenPlate();           
             InitializeKitchenLight();
+            InitializeKitchenChairs();
 
-            //Important Quest Models
+            //Garden
+            InitializeWC();
+            InitializeKey();
+            InitializeWell();
+            InitializeRock();
+            InitializeTrees();
+            InitializeBench(); 
+            InitializeBucket();            
+            InitializeShrubs();
+            InitializeTorches();  
+            InitializeCarrige();                      
+            InitializeGrassModels();           
+            InitializeCombatDummy();
+            InitializeGardenBarrels();
+
+            //Main Hall
+            InitializeCandle();
+            InitializeHallSofa();
+            InitializeHallTable();
+
+            /* Important Quest Models */
+
             InitializeToolbox();
             InitializeClipboard();
 
             //Character
             //InitializeLadyRoesia(); 
+        }
+        //Placed & Textured
+        private void InitializeCandle()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/Candle_low_Candle01_BaseColor");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/Candle_low");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var candle = new GameObject("CandleKitchenTable",
+                ObjectType.Static, RenderType.Opaque);
+            for (int i = 0; i < 2; i++)
+            {
+                candle = new GameObject("CandleKitchenTable0"+i,
+                ObjectType.Static, RenderType.Opaque);
+                candle.Transform = new Transform(0.03f * Vector3.One,
+                    Vector3.Zero, new Vector3(-37.9f-(0.6f*i), 1.78f, -27.5f-(10.3f*i)));
+                candle.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(candle);
+            }
+        }
+        //Placed & Textured
+        private void InitializeHallTable()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Hall/wood_table_001_diff_1k");
+            var model = Content.Load<Model>("Assets/Models/Hall/Table");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var table = new GameObject("HallTable",
+                ObjectType.Static, RenderType.Opaque);
+            for (int i = 0; i < 2; i++)
+            {
+                table = new GameObject("HallTable0" + i,
+                     ObjectType.Static, RenderType.Opaque);
+                table.Transform = new Transform(0.3f * Vector3.One,
+                 Vector3.Zero, new Vector3(-38-(1*i), 0, -27 - (10.8f * i)));
+                table.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(table);
+            }
+        }
+        //Placed & Textured
+        private void InitializeHallSofa()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Hall/initialShadingGroup_albedo");
+            var model = Content.Load<Model>("Assets/Models/Hall/LoungeSofa");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var sofa = new GameObject("LoungeSofa",
+                ObjectType.Static, RenderType.Opaque);
+            for (int i = 0; i < 2; i++)
+            {
+                sofa = new GameObject("LoungeSofa0" + i,
+                     ObjectType.Static, RenderType.Opaque);
+                sofa.Transform = new Transform(2.9f * Vector3.One,
+                 new Vector3(0, 33+(11*i), 0), new Vector3(-33-(7*i), 1.5f, -25-(8*i)));
+                sofa.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(sofa);
+            }
+        }
+        //Placed & Textured
+        private void InitializeGardenBarrels()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/LargeBarrel");
+            var model = Content.Load<Model>("Assets/Models/Garden/LargeBarrel");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var barrel = new GameObject("GardenBarrel",
+                ObjectType.Static, RenderType.Opaque);
+            for (int i = 0; i < 3; i++)
+            {
+                barrel = new GameObject("GardenBarrel0"+i,
+                     ObjectType.Static, RenderType.Opaque);
+                barrel.Transform = new Transform(0.2f * Vector3.One,
+                  new Vector3(0, 0.5f+(0.8f*i), 0), new Vector3(18+(1.4f*i), 0, -56-(0.2f*i)));
+                barrel.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(barrel);
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                barrel = new GameObject("GardenBarrelTop0" + i,
+                     ObjectType.Static, RenderType.Opaque);
+                barrel.Transform = new Transform(0.2f * Vector3.One,
+                  new Vector3(0, 0+(0.9f*i), 0), new Vector3(18.7f + (1.4f * i), 1.8f, -56 - (0.2f * i)));
+                barrel.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(barrel);
+            }
+        }
+        //Placed & Textured
+        private void InitializeWC()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/DefaultMaterial_Base_Color");
+            var model = Content.Load<Model>("Assets/Models/Garden/medival_WC");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var wc = new GameObject("OutdoorToilet",
+                ObjectType.Static, RenderType.Opaque);
+            wc.Transform = new Transform(0.19f * Vector3.One,
+                new Vector3(0, 22.1f, 0), new Vector3(65, 0, -63));
+            wc.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(wc);
+        }
+        private void InitializeCombatDummy()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/Dummy_BaseColor_compressed");
+            var model = Content.Load<Model>("Assets/Models/Garden/CombatDummy");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var dummy = new GameObject("CombatDummy",
+                   ObjectType.Static, RenderType.Opaque);
+            for (int i = 0; i < 2; i++)
+            {
+                dummy = new GameObject("CombatDummy0" + i,
+                    ObjectType.Static, RenderType.Opaque);
+                dummy.Transform = new Transform(0.14f * Vector3.One,
+                new Vector3(0, 0.2f - (0.4f * i), 0), new Vector3(64+(4f*i), 0, -35));
+                dummy.AddComponent(new Renderer(
+                    new GDBasicEffect(effect),
+                    new Material(texture, 1f),
+                    mesh));
+                sceneManager.ActiveScene.Add(dummy);
+            }
+        }
+        //Placed & Textured
+        private void InitializeDoors()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Other/DefaultMaterial_albedo");
+            var model = Content.Load<Model>("Assets/Models/MainStructure/anim_door");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var door = new GameObject("KitchenDoorNorth",
+                ObjectType.Static, RenderType.Opaque);
+            door.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+                new Vector3(0, 0.2f, 0), new Vector3(45, 0, -62.2f));
+            door.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(door);
+
+            var door02 = new GameObject("KitchenDoor",
+              ObjectType.Static, RenderType.Opaque);
+            door02.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+                new Vector3(0, 0, 0), new Vector3(11.9f, 0, -56.5f));
+            door02.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(door02);
+
+            var door03 = new GameObject("HallDoor",
+              ObjectType.Static, RenderType.Opaque);
+            door03.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+                new Vector3(0, 11, 0), new Vector3(-7.7f, 0, -54.1f));
+            door03.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(door03);
+
+            var door04 = new GameObject("HallDoorInside",
+           ObjectType.Static, RenderType.Opaque);
+            door04.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+                new Vector3(0, 0, 0), new Vector3(-21.9f, 0, -58.2f));
+            door04.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(door04);
+
+            //Main Entrance Door
+            var model2 = Content.Load<Model>("Assets/Models/MainStructure/anim_doorOpen");
+            var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model2);
+            var mainDoor = new GameObject("MainDoor",
+                ObjectType.Static, RenderType.Opaque);
+            mainDoor.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+                new Vector3(0, 0, 0), new Vector3(1.5f, 0, -19.5f));
+            mainDoor.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh2));
+            sceneManager.ActiveScene.Add(mainDoor);
+        }
+        //Placed & Textured
+        private void InitializeKey()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/key_albedo");
+            var model = Content.Load<Model>("Assets/Models/Garden/ancient_key");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var key = new GameObject("KitchenKey",
+                ObjectType.Static, RenderType.Opaque);
+            key.Transform = new Transform(0.09f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(82.4f, 0.1f, -45.1f));
+            key.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(key);
+        }
+        //Placed & Textured
+        private void InitializeBucket()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/OpenOldBucket");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/RegularBucketV2");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var bucket = new GameObject("Bucket",
+                ObjectType.Static, RenderType.Opaque);
+            bucket.Transform = new Transform(0.09f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(-1.5f, 0.01f, -83.6f));
+            bucket.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(bucket);
         }
         //Placed & Textured
         private void InitializeKitchenLight()
@@ -450,7 +690,7 @@ namespace GD.App
             var spoon = new GameObject("Spoon",
                 ObjectType.Static, RenderType.Opaque);
             spoon.Transform = new Transform(0.1f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(7, 1.52f, -84));
+                new Vector3(0, 0, 0), new Vector3(7, 1.52f, -84.8f));
             spoon.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.Silver),
@@ -466,7 +706,7 @@ namespace GD.App
             var plate = new GameObject("KitchenPlate",
                 ObjectType.Static, RenderType.Opaque);
             plate.Transform = new Transform(0.15f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(6, 1.5f, -85));
+                new Vector3(0, 0, 0), new Vector3(6, 1.5f, -85.6f));
             plate.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.White),
@@ -482,7 +722,7 @@ namespace GD.App
             var pot = new GameObject("KitchenPot",
                 ObjectType.Static, RenderType.Opaque);
             pot.Transform = new Transform(0.1f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(10.5f, 1.5f, -84.2f));
+                new Vector3(0, 0, 0), new Vector3(8.8f, 1.5f, -85.3f));
             pot.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.Silver),
@@ -498,7 +738,7 @@ namespace GD.App
             var knife = new GameObject("KitchenKnife",
                 ObjectType.Static, RenderType.Opaque);
             knife.Transform = new Transform(0.13f * Vector3.One,
-                new Vector3(0, 1.2f, 0), new Vector3(11.2f, 1.57f, -83));
+                new Vector3(0, 1.2f, 0), new Vector3(9.9f, 1.55f, -83.9f));
             knife.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.DimGray),
@@ -514,7 +754,7 @@ namespace GD.App
             var board = new GameObject("Board",
                 ObjectType.Static, RenderType.Opaque);
             board.Transform = new Transform(0.15f * Vector3.One,
-                new Vector3(0, 1.3f, 0), new Vector3(11.3f, 1.56f, -83.3f));
+                new Vector3(0, 1.3f, 0), new Vector3(10, 1.54f, -84.2f));
             board.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.BurlyWood),
@@ -529,8 +769,8 @@ namespace GD.App
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             var rollingPin = new GameObject("RollingPin",
                 ObjectType.Static, RenderType.Opaque);
-            rollingPin.Transform = new Transform(0.1f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(12.7f, 1.6f, -83));
+            rollingPin.Transform = new Transform(0.09f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(11.3f, 1.6f, -84));
             rollingPin.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.BurlyWood),
@@ -785,32 +1025,32 @@ namespace GD.App
         //Placed, !Textured
         private void InitializeShrubs()
         {
-            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/ShrubTexture");
             var model = Content.Load<Model>("Assets/Models/Garden/shrubV2");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
 
             var shrubV1_01 = new GameObject("ShrubModel01",
                 ObjectType.Static, RenderType.Opaque);
             shrubV1_01.Transform = new Transform(0.015f * Vector3.One,
-                new Vector3(0, 1, 0), new Vector3(28, 0, -45));
+                new Vector3(0, 33, 0), new Vector3(22.9f, 0, -56.7f));
             shrubV1_01.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh));
             sceneManager.ActiveScene.Add(shrubV1_01);
 
             var shrubV1_02 = new GameObject("ShrubModel02",
                 ObjectType.Static, RenderType.Opaque);
             shrubV1_02.Transform = new Transform(0.019f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(29, 0, -34));
+                new Vector3(0, 0, 0), new Vector3(18.6f, 0, -24.2f));
             shrubV1_02.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh));
             sceneManager.ActiveScene.Add(shrubV1_02);
         }
         //Placed & Textured
-        private void InitializeBarrelsBoxes()
+        private void InitializeBoxes()
         {
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/Medfan_Boxes_diffuse");
             var model = Content.Load<Model>("Assets/Models/Kitchen/rectBoxV2");
@@ -1040,14 +1280,14 @@ namespace GD.App
         // Placed & Textured
         private void InitializeTrees()
         {
-            // Tree Model 1
+            // Tree Model 1 - Deep brown one
             var treeV1_01 = new GameObject("TreeModel01",
                 ObjectType.Static, RenderType.Opaque);
             var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
             var model = Content.Load<Model>("Assets/Models/Garden/dryTree");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             treeV1_01.Transform = new Transform(0.07f * Vector3.One,
-                new Vector3(0, 1, 0), new Vector3(23, 0, -45));
+                new Vector3(0, 15, 0), new Vector3(23, 0, -45));
             treeV1_01.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.SaddleBrown),
@@ -1065,7 +1305,7 @@ namespace GD.App
             var treeV1_03 = new GameObject("TreeModel03",
                 ObjectType.Static, RenderType.Opaque);
             treeV1_03.Transform = new Transform(0.07f * Vector3.One,
-               new Vector3(0, 3, 0), new Vector3(48, 0, -57));
+               new Vector3(0, 8, 0), new Vector3(48, 0, -57));
             treeV1_03.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.SaddleBrown),
@@ -1074,7 +1314,7 @@ namespace GD.App
             var treeV1_04 = new GameObject("TreeModel04",
                 ObjectType.Static, RenderType.Opaque);
             treeV1_04.Transform = new Transform(0.07f * Vector3.One,
-               new Vector3(0, 3, 0), new Vector3(89, 0, -57));
+               new Vector3(0, 1, 0), new Vector3(89, 0, -57));
             treeV1_04.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.SaddleBrown),
@@ -1107,8 +1347,17 @@ namespace GD.App
                 new Material(texture, 1f, Color.SaddleBrown),
                 mesh));
             sceneManager.ActiveScene.Add(treeV1_07);
+            var treeV1_08 = new GameObject("TreeModel08",
+               ObjectType.Static, RenderType.Opaque);
+            treeV1_08.Transform = new Transform(0.07f * Vector3.One,
+               new Vector3(0, 7, 0), new Vector3(48, 0, -39));
+            treeV1_08.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f, Color.SaddleBrown),
+                mesh));
+            sceneManager.ActiveScene.Add(treeV1_08);
 
-            // Tree Model 2
+            // Tree Model 2 - Gray one
             var treeV2_01 = new GameObject("TreeModelV201",
                 ObjectType.Static, RenderType.Opaque);
             var textureV2 = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
@@ -1133,14 +1382,23 @@ namespace GD.App
             var treeV2_03 = new GameObject("TreeModelV203",
               ObjectType.Static, RenderType.Opaque);
             treeV2_03.Transform = new Transform(0.06f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(84, 0, -60));
+                new Vector3(0, 6, 0), new Vector3(84, 0, -60));
             treeV2_03.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(textureV2, 1f, Color.Gray),
                 meshV2));
             sceneManager.ActiveScene.Add(treeV2_03);
+            var treeV2_04 = new GameObject("TreeModelV204",
+             ObjectType.Static, RenderType.Opaque);
+            treeV2_04.Transform = new Transform(0.063f * Vector3.One,
+                new Vector3(0, 3, 0), new Vector3(54, 0, -36));
+            treeV2_04.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV2, 1f, Color.Gray),
+                meshV2));
+            sceneManager.ActiveScene.Add(treeV2_04);
 
-            // Tree Model 3
+            // Tree Model 3 - Bright brown one
             var treeV3_01 = new GameObject("TreeModelV301",
                 ObjectType.Static, RenderType.Opaque);       
             var textureV3 = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
@@ -1165,7 +1423,7 @@ namespace GD.App
             var treeV3_03 = new GameObject("TreeModelV303",
            ObjectType.Static, RenderType.Opaque);
             treeV3_03.Transform = new Transform(0.06f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(50, 0, -58));
+                new Vector3(0, 8, 0), new Vector3(50, 0, -58));
             treeV3_03.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(textureV3, 1f, Color.SandyBrown),
@@ -1174,14 +1432,23 @@ namespace GD.App
             var treeV3_04 = new GameObject("TreeModelV304",
            ObjectType.Static, RenderType.Opaque);
             treeV3_04.Transform = new Transform(0.06f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(40, 0, -33));
+                new Vector3(0, 2, 0), new Vector3(40, 0, -33));
             treeV3_04.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(textureV3, 1f, Color.SandyBrown),
                 meshV3));
             sceneManager.ActiveScene.Add(treeV3_04);
+            var treeV3_05 = new GameObject("TreeModelV305",
+          ObjectType.Static, RenderType.Opaque);
+            treeV3_05.Transform = new Transform(0.062f * Vector3.One,
+                new Vector3(0, 5, 0), new Vector3(79, 0, -40));
+            treeV3_05.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV3, 1f, Color.SandyBrown),
+                meshV3));
+            sceneManager.ActiveScene.Add(treeV3_05);
 
-            // Tree Model 4
+            // Tree Model 4 - Pink one
             var treeV4_01 = new GameObject("TreeModelV401",
                 ObjectType.Static, RenderType.Opaque);
             var textureV4 = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
@@ -1221,6 +1488,15 @@ namespace GD.App
                 new Material(textureV4, 1f, Color.RosyBrown),
                 meshV4));
             sceneManager.ActiveScene.Add(treeV4_04);
+            var treeV4_05 = new GameObject("TreeModelV405",
+               ObjectType.Static, RenderType.Opaque);
+            treeV4_05.Transform = new Transform(0.062f * Vector3.One,
+                new Vector3(0, 4, 0), new Vector3(84, 0, -41));
+            treeV4_05.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(textureV4, 1f, Color.RosyBrown),
+                meshV4));
+            sceneManager.ActiveScene.Add(treeV4_05);
         }
 
         //Placed, !Textured
@@ -1253,7 +1529,7 @@ namespace GD.App
             var gameObject = new GameObject("ToolboxModel",
                 ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.0045f * Vector3.One,
-                new Vector3(0, 1.2f, 0), new Vector3(45, 0.1f, -74.8f));
+                new Vector3(0, 1.2f, 0), new Vector3(62, 0.1f, -63));
             var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
             var model = Content.Load<Model>("Assets/Models/Kitchen/Toolbox");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
@@ -1279,17 +1555,18 @@ namespace GD.App
                 new Material(texture, 1f, Color.Orange),
                 mesh));
             sceneManager.ActiveScene.Add(gameObject);
-            //Note on bench
-            var gameObject2 = new GameObject("ClipboardModel02",
-              ObjectType.Static, RenderType.Opaque);
-            gameObject2.Transform = new Transform(0.005f * Vector3.One,
-                new Vector3(0, 10, 0), new Vector3(82.8f, 0.1f, -45.1f));
-            var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject2.AddComponent(new Renderer(
-                new GDBasicEffect(effect),
-                new Material(texture, 1f, Color.Orange),
-                mesh2));
-            sceneManager.ActiveScene.Add(gameObject2);
+
+            //Note on table. ONLY THERE AFTER SCREAM FROM KITCHEN
+
+            //var gameObject2 = new GameObject("ClipboardModel02",
+            //    ObjectType.Static, RenderType.Opaque);
+            //gameObject2.Transform = new Transform(0.004f * Vector3.One,
+            //    new Vector3(0, -0.4f, 0), new Vector3(13, 1.48f, -72));
+            //gameObject2.AddComponent(new Renderer(
+            //    new GDBasicEffect(effect),
+            //    new Material(texture, 1f, Color.Orange),
+            //    mesh));
+            //sceneManager.ActiveScene.Add(gameObject2);
         }
         //Placed, !Textured
         private void InitializeBench()
@@ -1312,7 +1589,7 @@ namespace GD.App
         {
             var gameObject = new GameObject("TableModel",
                 ObjectType.Static, RenderType.Opaque);
-            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/tableV2");
             var model = Content.Load<Model>("Assets/Models/Kitchen/BetterTable");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -1335,7 +1612,7 @@ namespace GD.App
             {
                 gameObject = new GameObject("Counter0" + i, ObjectType.Static, RenderType.Opaque);
                 gameObject.Transform = new Transform(0.14f * Vector3.One,
-                new Vector3(0, 7.6f, 0), new Vector3(6 + (5.7f * i), 0, -85+(1.5f*i)));
+                new Vector3(0, 7.6f, 0), new Vector3(6 + (4 * i), 0, -85.8f+(1*i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(effect),
                 new Material(texture, 1f, Color.WhiteSmoke),
@@ -1348,8 +1625,8 @@ namespace GD.App
         {
             var gameObject = new GameObject("WellModel",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.5f * Vector3.One,
-                new Vector3(0, 6, 0), new Vector3(35, 0, -44));
+            gameObject.Transform = new Transform(0.6f * Vector3.One,
+                new Vector3(0, 6, 0), new Vector3(38, 0, -44));
             var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/3D/PlainColourTexture");
             var model = Content.Load<Model>("Assets/Models/Garden/Old_Well");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
@@ -1514,7 +1791,7 @@ namespace GD.App
             var gameObject = new GameObject("StairsModel",
                 ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One,
-                new Vector3(11, 33, 0), new Vector3(-10, 2, -24));
+                new Vector3(11, 33, 0), new Vector3(-19.1f, 2, -24));
             var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Set UV");
             var model = Content.Load<Model>("Assets/Models/MainStructure/Stairs");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
