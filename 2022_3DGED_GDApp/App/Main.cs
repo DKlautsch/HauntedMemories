@@ -385,6 +385,7 @@ namespace GD.App
             //Garden
             InitializeWC();
             InitializeKey();
+            InitializeRing();
             InitializeWell();
             InitializeRock();
             InitializeTrees();
@@ -392,7 +393,7 @@ namespace GD.App
             InitializeBucket();            
             InitializeShrubs();
             InitializeTorches();  
-            InitializeCarrige();                      
+            InitializeCarrige();            
             InitializeGrassModels();           
             InitializeCombatDummy();
             InitializeGardenBarrels();
@@ -409,6 +410,21 @@ namespace GD.App
 
             //Character
             //InitializeLadyRoesia(); 
+        }
+        private void InitializeRing()
+        {
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/celtic_ring_wire_229154215_BaseColor");
+            var model = Content.Load<Model>("Assets/Models/Garden/celtic_ring");
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var ring = new GameObject("CelticRing",
+                ObjectType.Static, RenderType.Opaque);
+            ring.Transform = new Transform(0.03f * Vector3.One,
+                Vector3.Zero, new Vector3(30, 1, -28.4f));
+            ring.AddComponent(new Renderer(
+                new GDBasicEffect(effect),
+                new Material(texture, 1f),
+                mesh));
+            sceneManager.ActiveScene.Add(ring);
         }
         //Placed & Textured
         private void InitializeCandle()
