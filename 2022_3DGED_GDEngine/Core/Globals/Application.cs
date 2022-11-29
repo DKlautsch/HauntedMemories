@@ -41,7 +41,7 @@ namespace GD.Engine.Globals
         /// <summary>
         /// Gets or sets the scene manager.
         /// </summary>
-        public static SceneManager SceneManager { get; set; }
+        public static SceneManager<Scene> SceneManager { get; set; }
 
         /// <summary>
         /// Gets or sets the scene manager.
@@ -57,6 +57,16 @@ namespace GD.Engine.Globals
         /// Store a handle to currently active player
         /// </summary>
         public static GameObject Player { get; set; }
+
+        /// <summary>
+        /// Store a handle for the physics manager so that collider components can access Space to add BEPU collider primitives (e.g. Box, Sphere, Capsule)
+        /// </summary>
+        public static PhysicsManager PhysicsManager { get; internal set; }
+
+        /// <summary>
+        /// For the UI
+        /// </summary>
+        public static SceneManager<Scene2D> UISceneManager { get; internal set; }
 
         #endregion Properties
     }
