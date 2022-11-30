@@ -51,9 +51,9 @@ namespace GD.App
         #region Camera - First Person
 
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
-        public static readonly float FIRST_PERSON_MOVE_SPEED = 0.009f;
+        public static readonly float FIRST_PERSON_MOVE_SPEED = 0.036f;
         public static readonly float FIRST_PERSON_STRAFE_SPEED = 0.6f * FIRST_PERSON_MOVE_SPEED;
-        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0, 2, 5);
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0, 4, 5);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
@@ -61,6 +61,8 @@ namespace GD.App
         public static readonly float FIRST_PERSON_HALF_FOV = MathHelper.PiOver2 / 2.0f;
 
         public static readonly float FIRST_PERSON_CAMERA_SMOOTH_FACTOR = 0.1f;
+
+        public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
 
         #endregion Camera - First Person
 
@@ -105,6 +107,13 @@ namespace GD.App
         public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.004f, 0.003f);
 
         #endregion Movement Constants
+
+        #region Picking
+
+        public static readonly float PICKING_MIN_PICK_DISTANCE = 2;
+        public static readonly float PICKING_MAX_PICK_DISTANCE = 100;
+
+        #endregion
 
         #region Core
 

@@ -43,6 +43,7 @@ namespace GD.App
         private RenderManager renderManager;
         private EventDispatcher eventDispatcher;
         private GameObject playerGameObject;
+        private PickingManager pickingManager;
         private StateManager stateManager;
         private GameObject uiTextureGameObject;
         private SpriteMaterial textSpriteMaterial;
@@ -189,12 +190,15 @@ namespace GD.App
             //add the player
             //InitializePlayer();
 
+#if DEMO
             //Raise all the events that I want to happen at the start
             //object[] parameters = { "epic_soundcue" };
             //EventDispatcher.Raise(
             //    new EventData(EventCategoryType.Player,
             //    EventActionType.OnSpawnObject,
             //    parameters));
+
+#endif
 
             InitializeUI();
         }
@@ -360,29 +364,50 @@ namespace GD.App
 
             //camera 1
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
-            cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
-            cameraGameObject.AddComponent(
-                new Camera(
-                AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-                AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
-                AppData.FIRST_PERSON_CAMERA_FCP,
-                new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
-                _graphics.PreferredBackBufferHeight))); // 3000
+            cameraGameObject.Transform = new Transform(null, null,
+                 AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
+
+            #region Camera - View & Projection
+
+            cameraGameObject.AddComponent(new Camera(
+             AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
+             (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+             AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
+             AppData.FIRST_PERSON_CAMERA_FCP,
+             new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
+             _graphics.PreferredBackBufferHeight))); // 3000
+
+            #endregion
+
+            #region Collision - Add capsule
+
+            //adding a collidable surface that enables acceleration, jumping
+            var characterCollider = new CharacterCollider(cameraGameObject, true);
+
+            cameraGameObject.AddComponent(characterCollider);
+            characterCollider.AddPrimitive(new Capsule(cameraGameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2), 1, 3.6f),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            characterCollider.Enable(cameraGameObject, false, 1);
+
+            #endregion
+
+            #region Collision - Add Controller for movement (now with collision)
+
+            cameraGameObject.AddComponent(new CollidableFirstPersonController(cameraGameObject,
+                characterCollider,
+                AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
+                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+
+            #endregion
+
+            #region 3D Sound
 
             //added ability for camera to listen to 3D sounds
             cameraGameObject.AddComponent(new AudioListenerBehaviour());
 
-            //OLD
-            //cameraGameObject.AddComponent(new FirstPersonCameraController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED));
-
-            //NEW
-            cameraGameObject.AddComponent(new FirstPersonController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
-
-            //cameraGameObject.AddComponent(new CameraFOVController(1));
-
-            cameraManager.Add(cameraGameObject.Name, cameraGameObject);
+            #endregion
 
             #endregion First Person
 
@@ -2273,11 +2298,11 @@ namespace GD.App
         {
             //game object
             var gameObject = new GameObject("my first collidable box!", ObjectType.Dynamic, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Prop;
+            gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform(
                 new Vector3(1, 1, 1),
-                new Vector3(45, 45, 0),
+                new Vector3(0, 0, 0),
                 new Vector3(0, 15, 0));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
             var model = Content.Load<Model>("Assets/Models/DemoModels/cube");
@@ -2608,6 +2633,7 @@ namespace GD.App
 
             //big kahuna nr 2! this renders the ActiveScene from the ActiveCamera perspective
             renderManager = new RenderManager(this, new ForwardSceneRenderer(_graphics.GraphicsDevice));
+            renderManager.DrawOrder = 1;
             Components.Add(renderManager);
 
             //add support for playing sounds
@@ -2619,6 +2645,29 @@ namespace GD.App
             physicsManager = new PhysicsManager(this, AppData.GRAVITY);
             Components.Add(physicsManager);
 
+            #region Collision - Picking
+
+            //picking support using physics engine
+            //this predicate lets us say ignore all the other collidable objects except interactables and consumables
+            Predicate<GameObject> collisionPredicate =
+                (collidableObject) =>
+                {
+                    if (collidableObject != null)
+                        return collidableObject.GameObjectType
+                        == GameObjectType.Interactable
+                        || collidableObject.GameObjectType == GameObjectType.Consumable
+                        || collidableObject.GameObjectType == GameObjectType.Collectible;
+                    return false;
+                };
+
+            pickingManager = new PickingManager(this,
+                AppData.PICKING_MIN_PICK_DISTANCE,
+                AppData.PICKING_MAX_PICK_DISTANCE,
+                collisionPredicate);
+            Components.Add(pickingManager);
+
+            #endregion
+
             //add state manager for inventory and countdown
             stateManager = new StateManager(this, AppData.MAX_GAME_TIME_IN_MSECS);
             Components.Add(stateManager);
@@ -2628,8 +2677,8 @@ namespace GD.App
             uiManager = new SceneManager<Scene2D>(this);
             Components.Add(uiManager);
 
-            uiRenderManager = new Render2DManager(this,
-                StatusType.Drawn | StatusType.Updated, _spriteBatch);
+            uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
+            uiRenderManager.DrawOrder = 2;
             Components.Add(uiRenderManager);
 
             #endregion
@@ -2684,7 +2733,11 @@ namespace GD.App
             Components.Add(perfUtility);
 
             if (showCollisionSkins)
-                Components.Add(new PhysicsDebugDrawer(this));
+            {
+                var physicsDebugDrawer = new PhysicsDebugDrawer(this);
+                physicsDebugDrawer.DrawOrder = 4;
+                Components.Add(physicsDebugDrawer);
+            }
         }
 
         #endregion Actions - Engine Specific
