@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define HI_RES
+#define HI_RES
 
 #endregion
 
