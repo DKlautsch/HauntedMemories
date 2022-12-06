@@ -21,7 +21,7 @@ namespace GD.Engine
         /// <summary>
         /// Stores S, R, T of GameObject to generate the world matrix
         /// </summary>
-        protected Transform transform;
+        public Transform transform;
 
         /// <summary>
         /// List of all attached components
