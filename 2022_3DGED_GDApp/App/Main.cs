@@ -36,7 +36,7 @@ namespace GD.App
         private BasicEffect unlitEffect;
         private BasicEffect litEffect;
 
-        private CameraManager cameraManager;
+        public CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
         private SoundManager soundManager;
         private PhysicsManager physicsManager;
@@ -2978,6 +2978,38 @@ namespace GD.App
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (cameraManager.activeCamera.transform.translation.Z <= -56)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom3");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom2");
+                }
+                else
+                    Application.SoundManager.Pause("boom3");
+            else if (cameraManager.activeCamera.transform.translation.Z >= -56 && cameraManager.activeCamera.transform.translation.Z <= -20 && cameraManager.activeCamera.transform.translation.X <= -7)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom2");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom3");
+                }
+                else
+                    Application.SoundManager.Pause("boom2");
+
+            else
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+            {
+                Application.SoundManager.Resume("boom1");
+                Application.SoundManager.Pause("boom3");
+                Application.SoundManager.Pause("boom2");
+            }
+            else
+                Application.SoundManager.Pause("boom1");
 
 #if DEMO
             if (Input.Keys.WasJustPressed(Keys.P))
