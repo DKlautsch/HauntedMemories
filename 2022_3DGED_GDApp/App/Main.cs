@@ -214,7 +214,7 @@ namespace GD.App
             #region Add Background
 
             uiTextureGameObject = new GameObject("background");
-            var texture = Content.Load<Texture2D>("Assets/Textures/DemoTextures/Menu/Backgrounds/exitmenuwithtrans");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/MainMenuConcept");
             var material = new SpriteMaterial(texture, Color.White);
 
             var scaleToWindow = new Vector3(((float)_graphics.PreferredBackBufferWidth) / texture.Width,
@@ -538,10 +538,16 @@ namespace GD.App
         }
 
         private void InitializeCollidableContent(float worldScale)
-        {
+        {            
             InitializeCollidableGround(worldScale);
+            
+            //DEMO MODELS
             InitializeCollidableBox();
             InitializeCollidableHighDetailMonkey();
+
+            //OUR MODELS
+            InitializeWalls();
+            InitializeTowerModels();
         }
 
         private void InitializeNonCollidableContent(float worldScale)
@@ -571,11 +577,9 @@ namespace GD.App
 
             //Big Stuctures
             InitializeDoors();
-            InitializeWalls();
             InitializeFloors();
             InitializeStairs();
-            InitializeEntrance();
-            InitializeTowerModels();
+            InitializeEntrance();            
 
             /* Filler Models */
 
@@ -1314,60 +1318,61 @@ namespace GD.App
         //Placed & Textured
         private void InitializeKitchenChairs()
         {
+            var gameObject = new GameObject("KitchenChair",ObjectType.Static, RenderType.Opaque);
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/texture");
             var model = Content.Load<Model>("Assets/Models/Kitchen/Chair_02");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
 
             for (int i = 0; i < 2; i++)
             {
-                var chair01 = new GameObject("KitchenChair0" + i,
+                gameObject = new GameObject("KitchenChair0" + i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.012f * Vector3.One,
+                gameObject.Transform = new Transform(0.012f * Vector3.One,
                     new Vector3(0, 630.2536f, 0), new Vector3(7 + (2 * i), 0, -70.8f));
-                chair01.AddComponent(new Renderer(
+                gameObject.AddComponent(new Renderer(
                     new GDBasicEffect(litEffect),
                     new Material(texture, 1f, Color.BurlyWood),
                     mesh));
-                sceneManager.ActiveScene.Add(chair01);
+                sceneManager.ActiveScene.Add(gameObject);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                var chair01 = new GameObject("KitchenChairOtherSide0" + i,
+                gameObject = new GameObject("KitchenChairOtherSide0" + i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.012f * Vector3.One,
+                gameObject.Transform = new Transform(0.012f * Vector3.One,
                     new Vector3(0, 1890.761f, 0), new Vector3(7 + (2 * i), 0, -73.7f));
-                chair01.AddComponent(new Renderer(
+                gameObject.AddComponent(new Renderer(
                     new GDBasicEffect(litEffect),
                     new Material(texture, 1f, Color.BurlyWood),
                     mesh));
-                sceneManager.ActiveScene.Add(chair01);
+                sceneManager.ActiveScene.Add(gameObject);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                var chair01 = new GameObject("KitchenChairV20" + i,
+                gameObject = new GameObject("KitchenChairV20" + i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.012f * Vector3.One,
+                gameObject.Transform = new Transform(0.012f * Vector3.One,
                     new Vector3(0, 630.2536f, 0), new Vector3(11 + (2 * i), 0, -70.8f));
-                chair01.AddComponent(new Renderer(
+                gameObject.AddComponent(new Renderer(
                     new GDBasicEffect(litEffect),
                     new Material(texture, 1f, Color.BurlyWood),
                     mesh));
-                sceneManager.ActiveScene.Add(chair01);
+                sceneManager.ActiveScene.Add(gameObject);
             }
 
             for (int i = 0; i < 2; i++)
             {
-                var chair01 = new GameObject("KitchenChairOtherSideV20" + i,
+                gameObject = new GameObject("KitchenChairOtherSideV20" + i,
                 ObjectType.Static, RenderType.Opaque);
-                chair01.Transform = new Transform(0.012f * Vector3.One,
+                gameObject.Transform = new Transform(0.012f * Vector3.One,
                     new Vector3(0, 1890.761f, 0), new Vector3(11 + (2 * i), 0, -73.7f));
-                chair01.AddComponent(new Renderer(
+                gameObject.AddComponent(new Renderer(
                     new GDBasicEffect(litEffect),
                     new Material(texture, 1f, Color.BurlyWood),
                     mesh));
-                sceneManager.ActiveScene.Add(chair01);
+                sceneManager.ActiveScene.Add(gameObject);
             }
         }
         //Placed & Textured
@@ -1823,33 +1828,50 @@ namespace GD.App
             var gameObject = new GameObject("TableModel",
                 ObjectType.Static, RenderType.Opaque);
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/tableV2");
-            var model = Content.Load<Model>("Assets/Models/Kitchen/BetterTable");
+            var model = Content.Load<Model>("Assets/Models/Kitchen/BetterTableFixed");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.LightGray),
-                mesh));
+            var collider = new Collider(gameObject);
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Table0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.14f * Vector3.One,
-                new Vector3(0, 452.6367f, 0), new Vector3(8 + (4 * i), 0, -72 - (0.2f * i)));
+                gameObject.Transform = new Transform(4*Vector3.One,
+                new Vector3(0, 452.6367f, 0), new Vector3(8 + (4 * i), 1, -72 - (0.2f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.WhiteSmoke),
+                new Material(texture, 1f),
                 mesh));
+
+                collider = new Collider(gameObject);
+                collider.AddPrimitive(new Box(
+                        gameObject.Transform.Translation,
+                        gameObject.Transform.Rotation,
+                        new Vector3(3,1,4)),
+                        new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 1);
+                gameObject.AddComponent(collider);
+
                 sceneManager.ActiveScene.Add(gameObject);
             }
 
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Counter0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.14f * Vector3.One,
-                new Vector3(0, 435.4479f, 0), new Vector3(6 + (4 * i), 0, -85.8f + (1 * i)));
+                gameObject.Transform = new Transform(4*Vector3.One,
+                new Vector3(0, 435.4479f, 0), new Vector3(6 + (4 * i), 1, -85.8f + (1 * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.WhiteSmoke),
+                new Material(texture, 1f),
                 mesh));
+
+                collider = new Collider(gameObject);
+                collider.AddPrimitive(new Box(
+                        gameObject.Transform.Translation,
+                        gameObject.Transform.Rotation,
+                        new Vector3(3, 1, 4)),
+                        new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 1);
+                gameObject.AddComponent(collider);
+
                 sceneManager.ActiveScene.Add(gameObject);
             }
         }
@@ -1867,6 +1889,15 @@ namespace GD.App
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.Silver),
                 mesh));
+            //var collider = new Collider(gameObject, true);
+            //collider.AddPrimitive(new Box(
+            //    gameObject.Transform.Translation,
+            //    gameObject.Transform.Rotation,
+            //    gameObject.Transform.Scale),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f));
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
+
             sceneManager.ActiveScene.Add(gameObject);
         }
 
@@ -1895,7 +1926,7 @@ namespace GD.App
                 new Vector3(630.25f, 171.9f, 0), new Vector3(13, 15, -18)); // x rot = 11, y rot = 3
             var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
             var model = Content.Load<Model>("Assets/Models/MainStructure/TowerV2");
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);            
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.White),
@@ -1913,7 +1944,7 @@ namespace GD.App
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.White),
-                mesh));
+                mesh));            
             sceneManager.ActiveScene.Add(gameObject);
 
             //Tower North
@@ -2039,198 +2070,358 @@ namespace GD.App
         {
             var gameObject = new GameObject("CastleWallNew",
                ObjectType.Static, RenderType.Opaque);
-            var model = Content.Load<Model>("Assets/Models/MainStructure/CastleWall");
-            var smallerModel = Content.Load<Model>("Assets/Models/MainStructure/CastleWall02");
+            var model = Content.Load<Model>("Assets/Models/MainStructure/CastleWall_Fixed");
+            var smallerModel = Content.Load<Model>("Assets/Models/MainStructure/CastleWall02_Fixed");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             var smallerMesh = new Engine.ModelMesh(_graphics.GraphicsDevice, smallerModel);
             var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
+            var collider = new Collider(gameObject);
+
             //Left side
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle wall front left 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 0, 0), new Vector3(-17 - (18.9f * i), 7, -16)); // x = 11
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    Vector3.Zero,
+                    new Vector3(-17 - (19.3f * i), 6.9f, -20));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+
             //South side
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle wall south side 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 630.25f, 0), new Vector3(-48.1f, 7, -30.8f - (18.9f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    new Vector3(0, 630.25f, 0),
+                    new Vector3(-43.8f, 6.9f, -30.8f - (18.9f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //South west side
             for (int i = 0; i < 3; i++)
             {
                 gameObject = new GameObject("Castle wall south west side 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, -1948.057f, 0), new Vector3(-39f + (16 * i), 7, -68 - (10 * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    new Vector3(0, -1948.057f, 0),
+                    new Vector3(-36.4f + (16 * i), 7, -65 - (10 * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //Right side
             for (int i = 0; i < 5; i++)
             {
                 gameObject = new GameObject("Castle wall front right 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 10.313f, 0), new Vector3(15.1f + (18.5f * i), 7, -17 - (3.5f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    new Vector3(0, 10.313f, 0),
+                    new Vector3(14 + (18.5f * i), 7, -21 - (3.5f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //North west side
             for (int i = 0; i < 5; i++)
             {
                 gameObject = new GameObject("Castle wall north west side 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 343.77f, 0), new Vector3(12 + (18 * i), 7, -83 + (5f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    new Vector3(0, 343.77f, 0),
+                    new Vector3(12.4f + (18 * i), 7, -87 + (5f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //North side
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle wall north side 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 458.37f, 0), new Vector3(98 + (2.5f * i), 7, -59 + (18f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    new Vector3(0, 458.37f, 0),
+                    new Vector3(94 + (2.5f * i), 7, -58 + (18f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19.4f, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+
             //Above entrance
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle wall above entrance 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 0, 0), new Vector3(3, 12, -13));
+                gameObject.Transform = new Transform(
+                    new Vector3(20, 39, 19),
+                    Vector3.Zero,
+                    new Vector3(-3, 12, -17));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
+
+            //Above kitchen entrance
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle wall above entrance kitchen 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.01f, 0.027f, 0.048f),
-                 new Vector3(630.25f, 5.73f, 0), new Vector3(12 + (34 * i), 9, -54.8f - (4.5f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(6, 26.5f, 15),
+                    new Vector3(0, 5.73f, 0),
+                    new Vector3(11.7f + (33.8f * i), 8.9f, -57.5f - (4.9f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
+            //Above Main Hall Entrance
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle wall above entrance hall 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.01f, 0.027f, 0.048f),
-                 new Vector3(630.25f, 630.25f, 0), new Vector3(-8.5f, 9, -53.5f));
+                gameObject.Transform = new Transform(
+                    new Vector3(6, 26.8f, 17),
+                    new Vector3(0, 630.25f, 0),
+                    new Vector3(-5.9f, 8.8f, -53.5f));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
-            //above hall to kitchen entrance
+            
+            //Above hall to kitchen entrance
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle wall above entrance hall to kitchen 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.01f, 0.027f, 0.048f),
-                 new Vector3(630.25f, 0, 0), new Vector3(-22, 9, -54.8f));
+                gameObject.Transform = new Transform(
+                    new Vector3(6, 27, 15),
+                    Vector3.Zero,
+                    new Vector3(-22, 8.9f, -57.9f));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //Inside hall
             for (int i = 0; i < 3; i++)
             {
                 gameObject = new GameObject("Castle hall wall lol 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 269.29f, 0), new Vector3(-6.5f + (0.12f * i), 7, -20 - (11.2f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(12, 39, 19),
+                    new Vector3(0, 269.29f, 0),
+                    new Vector3(-6.1f + (0.12f * i), 7, -24 - (11.2f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 smallerMesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(12, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             //Inside hall South 
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle hall wall south 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 0, 0), new Vector3(-33 + (23.2f * i), 7, -54));
+                gameObject.Transform = new Transform(
+                    new Vector3(19.8f, 39, 19),
+                    Vector3.Zero,
+                    new Vector3(-33 + (22.7f * i), 7, -58));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
-            // Kitchen walls (Smaller wall with skewed texture on one side, so I had to rotate it so the other wall
-            // woudl cover up the isssue. Tried fixing it in Maya but dispite my efforts it still appeared skewed.)
+
+            // Kitchen wall
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle hall kitchen 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, 177.62f, 0), new Vector3(0.9f, 7, -58));
+                gameObject.Transform = new Transform(
+                    new Vector3(12, 39, 19),
+                    new Vector3(0, 177.62f, 0),
+                    new Vector3(5.1f, 7.7f, -57.5f));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 smallerMesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(11, 8, 3.4f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
             // kitchen walls, north west
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle hall kitchen NW 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, -171.89f, 0), new Vector3(22 + (18.7f * i), 7, -63.5f - (2.8f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(19.7f, 39, 20),
+                    new Vector3(0, -171.89f, 0),
+                    new Vector3(23, 6.9f, -59.4f));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19, 8, 3.9f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+            
+            // North-East inside
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Castle hall kitchen NW 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, -171.89f - (177.616f * i), 0), new Vector3(33.7f + (23f * i), 7, -61f - (4f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(11.8f, 42, 19),
+                    new Vector3(0, -171.89f - (177.616f * i), 0),
+                    new Vector3(37.9f + (14.8f * i), 7, -61.2f - (3.1f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 smallerMesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(10+(1.2f*i), 8, 3.5f+(0.8f*i))),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+
+            // North-most inside wall kitchen
             for (int i = 0; i < 1; i++)
             {
                 gameObject = new GameObject("Castle hall kitchen NW 0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(new Vector3(0.035f, 0.035f, 0.07f),
-                 new Vector3(630.25f, -171.8873f - (177.6169f * i), 0), new Vector3(66f + (23f * i), 7, -70.5f - (4f * i)));
+                gameObject.Transform = new Transform(
+                    new Vector3(19.7f, 39, 20),
+                    new Vector3(0, -171.8873f, 0),
+                    new Vector3(66, 7, -66));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
+                //add Collision Surface(s)
+                collider = new Collider(gameObject, true);
+                collider.AddPrimitive(new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(19, 8, 3.6f)),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+                collider.Enable(gameObject, true, 50);
+                gameObject.AddComponent(collider);
                 sceneManager.ActiveScene.Add(gameObject);
             }
         }
