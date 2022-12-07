@@ -547,6 +547,7 @@ namespace GD.App
 
             //OUR MODELS
             InitializeWalls();
+            InitializeTable();
             InitializeTowerModels();
         }
 
@@ -589,7 +590,6 @@ namespace GD.App
             InitializeStove();
             InitializeBoxes();
             InitializeSpoon();
-            InitializeTable();
             InitializeWheetBags();
             InitializeKitchenPot();
             InitializeRollingPin();
@@ -911,7 +911,7 @@ namespace GD.App
             var milk = new GameObject("Milk",
                 ObjectType.Static, RenderType.Opaque);
             milk.Transform = new Transform(0.11f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(5, 1.5f, -86));
+                new Vector3(0, 0, 0), new Vector3(5, 1.7f, -86));
             milk.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.Silver),
@@ -927,7 +927,7 @@ namespace GD.App
             var spoon = new GameObject("Spoon",
                 ObjectType.Static, RenderType.Opaque);
             spoon.Transform = new Transform(0.1f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(7, 1.52f, -84.8f));
+                new Vector3(0, 0, 0), new Vector3(7, 1.75f, -84.8f));
             spoon.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.Silver),
@@ -943,7 +943,7 @@ namespace GD.App
             var plate = new GameObject("KitchenPlate",
                 ObjectType.Static, RenderType.Opaque);
             plate.Transform = new Transform(0.15f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(6, 1.5f, -85.6f));
+                new Vector3(0, 0, 0), new Vector3(6, 1.7f, -85.6f));
             plate.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.White),
@@ -959,7 +959,7 @@ namespace GD.App
             var pot = new GameObject("KitchenPot",
                 ObjectType.Static, RenderType.Opaque);
             pot.Transform = new Transform(0.1f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(8.8f, 1.5f, -85.3f));
+                new Vector3(0, 0, 0), new Vector3(8.8f, 1.7f, -85.3f));
             pot.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.Silver),
@@ -975,7 +975,7 @@ namespace GD.App
             var knife = new GameObject("KitchenKnife",
                 ObjectType.Static, RenderType.Opaque);
             knife.Transform = new Transform(0.13f * Vector3.One,
-                new Vector3(0, 68.75494f, 0), new Vector3(9.9f, 1.55f, -83.9f));
+                new Vector3(0, 68.75494f, 0), new Vector3(9.9f, 1.7f, -83.9f));
             knife.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.DimGray),
@@ -991,7 +991,7 @@ namespace GD.App
             var board = new GameObject("Board",
                 ObjectType.Static, RenderType.Opaque);
             board.Transform = new Transform(0.15f * Vector3.One,
-                new Vector3(0, 74.48451f, 0), new Vector3(10, 1.54f, -84.2f));
+                new Vector3(0, 74.48451f, 0), new Vector3(10, 1.7f, -84.2f));
             board.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.BurlyWood),
@@ -1007,7 +1007,7 @@ namespace GD.App
             var rollingPin = new GameObject("RollingPin",
                 ObjectType.Static, RenderType.Opaque);
             rollingPin.Transform = new Transform(0.09f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(11.3f, 1.6f, -84));
+                new Vector3(0, 0, 0), new Vector3(11.3f, 1.78f, -84));
             rollingPin.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.BurlyWood),
@@ -1504,7 +1504,7 @@ namespace GD.App
             var gameObject = new GameObject("MugModel",
                 ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One,
-                new Vector3(0, 57.29578f, 0), new Vector3(9, 1.5f, -71.4f));
+                new Vector3(0, 57.29578f, 0), new Vector3(9, 1.7f, -71.4f));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Kitchen/Mug_BaseColor");
             var model = Content.Load<Model>("Assets/Models/Kitchen/Mug");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
@@ -1799,9 +1799,9 @@ namespace GD.App
             //var gameObject2 = new GameObject("ClipboardModel02",
             //    ObjectType.Static, RenderType.Opaque);
             //gameObject2.Transform = new Transform(0.004f * Vector3.One,
-            //    new Vector3(0, -0.4f, 0), new Vector3(13, 1.48f, -72));
+            //    new Vector3(0, -0.4f, 0), new Vector3(13, 1.7f, -72));
             //gameObject2.AddComponent(new Renderer(
-            //    new GDBasicEffect(effect),
+            //    new GDBasicEffect(litEffect),
             //    new Material(texture, 1f, Color.Orange),
             //    mesh));
             //sceneManager.ActiveScene.Add(gameObject2);
@@ -1834,7 +1834,7 @@ namespace GD.App
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Table0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(4*Vector3.One,
+                gameObject.Transform = new Transform(3.5f*Vector3.One,
                 new Vector3(0, 452.6367f, 0), new Vector3(8 + (4 * i), 1, -72 - (0.2f * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
@@ -1856,7 +1856,7 @@ namespace GD.App
             for (int i = 0; i < 2; i++)
             {
                 gameObject = new GameObject("Counter0" + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(4*Vector3.One,
+                gameObject.Transform = new Transform(3.5f*Vector3.One,
                 new Vector3(0, 435.4479f, 0), new Vector3(6 + (4 * i), 1, -85.8f + (1 * i)));
                 gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
@@ -1867,7 +1867,7 @@ namespace GD.App
                 collider.AddPrimitive(new Box(
                         gameObject.Transform.Translation,
                         gameObject.Transform.Rotation,
-                        new Vector3(3, 1, 4)),
+                        new Vector3(2, 1, 3)),
                         new MaterialProperties(0.8f, 0.8f, 0.7f));
                 collider.Enable(gameObject, true, 1);
                 gameObject.AddComponent(collider);
