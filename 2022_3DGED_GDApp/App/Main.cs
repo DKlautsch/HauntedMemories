@@ -447,7 +447,7 @@ namespace GD.App
             characterCollider.AddPrimitive(new Capsule(
                 cameraGameObject.Transform.Translation,
                 Matrix.CreateRotationX(MathHelper.PiOver2),
-                1, 3.6f),
+                1, 1.8f),
                 new MaterialProperties(0.2f, 0.8f, 0.7f));
             characterCollider.Enable(cameraGameObject, false, 1);
 
@@ -1922,43 +1922,62 @@ namespace GD.App
             //Tower Entrance Right
             var gameObject = new GameObject("TowerModelRight",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(new Vector3(0.06f, 0.06f, 0.05f),
-                new Vector3(630.25f, 171.9f, 0), new Vector3(13, 15, -18)); // x rot = 11, y rot = 3
+            gameObject.Transform = new Transform(
+                new Vector3(42, 37, 36),
+                new Vector3(0, 171.9f, 0),
+                new Vector3(13, 15, -18));
             var texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
-            var model = Content.Load<Model>("Assets/Models/MainStructure/TowerV2");
+            var model = Content.Load<Model>("Assets/Models/MainStructure/TowerV2_Fixed");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);            
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh));
+            var collider = new Collider(gameObject);
+            collider.AddPrimitive(CollisionUtility.GetTriangleMesh(model,
+                gameObject.Transform), new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 1);
+            gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
 
             //Tower Entrance Left
             gameObject = new GameObject("TowerModelLeft",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(new Vector3(0.06f, 0.06f, 0.05f),
-                new Vector3(630.25f, 171.9f, 0), new Vector3(-10, 15, -18));
-            texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
-            model = Content.Load<Model>("Assets/Models/MainStructure/TowerV2");
+            gameObject.Transform = new Transform(
+                new Vector3(42, 37, 36),
+                new Vector3(0, 171.9f, 0),
+                new Vector3(-10, 15, -18));
+            model = Content.Load<Model>("Assets/Models/MainStructure/TowerV2_Fixed");
             mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
-                mesh));            
+                new Material(texture, 1f),
+                mesh));
+            collider = new Collider(gameObject);
+            collider.AddPrimitive(CollisionUtility.GetTriangleMesh(model,
+                gameObject.Transform), new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 1);
+            gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
 
             //Tower North
             gameObject = new GameObject("TowerModelNorth",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(new Vector3(0.06f, 0.06f, 0.05f),
-                new Vector3(630.25f, -4583.662f, 0), new Vector3(106, 13, -44));
-            texture = Content.Load<Texture2D>("Assets/Textures/Walls/Castle Towers UV New");
-            model = Content.Load<Model>("Assets/Models/MainStructure/Tower3");
+            gameObject.Transform = new Transform(
+                new Vector3(42, 42, 36),
+                new Vector3(0, -4583.662f, 0),
+                new Vector3(106, 13, -47));
+            model = Content.Load<Model>("Assets/Models/MainStructure/Tower3_FixedV2");
             mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh));
+            collider = new Collider(gameObject);
+            collider.AddPrimitive(CollisionUtility.GetTriangleMesh(model,
+                gameObject.Transform), new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 1);
+            gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
         }
 
@@ -1974,7 +1993,7 @@ namespace GD.App
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh));
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1986,7 +2005,7 @@ namespace GD.App
             var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject2.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh2));
             sceneManager.ActiveScene.Add(gameObject2);
 
@@ -1999,7 +2018,7 @@ namespace GD.App
             var mesh3 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject3.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh2));
 
             sceneManager.ActiveScene.Add(gameObject3);
@@ -2012,7 +2031,7 @@ namespace GD.App
             var mesh4 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject4.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh4));
             sceneManager.ActiveScene.Add(gameObject4);
 
@@ -2024,7 +2043,7 @@ namespace GD.App
             var mesh5 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject5.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh5));
             sceneManager.ActiveScene.Add(gameObject5);
 
@@ -2035,7 +2054,7 @@ namespace GD.App
             var mesh6 = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject6.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
+                new Material(texture, 1f),
                 mesh6));
             sceneManager.ActiveScene.Add(gameObject6);
             var windowPane = new GameObject("WindowPane",
@@ -2046,7 +2065,7 @@ namespace GD.App
             var windowMesh = new Engine.CubeMesh(_graphics.GraphicsDevice);
             windowPane.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
-                new Material(texture2, 1f, Color.White),
+                new Material(texture2, 1f),
                 windowMesh));
             sceneManager.ActiveScene.Add(windowPane);
         }
@@ -2426,9 +2445,6 @@ namespace GD.App
             }
         }
 
-        // Modelled kitchen floor in maya using screen shot of room as ref. Texture not looking great
-        // as when I brought in a tiled texture it looks blurry. See if this can be fixed soon. Same issue
-        // with the grass texture.
         private void InitializeFloors()
         {
             var gameObject = new GameObject("KitchenFloorModel",
