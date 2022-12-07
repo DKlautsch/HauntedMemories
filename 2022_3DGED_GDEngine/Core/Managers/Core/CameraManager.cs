@@ -12,7 +12,7 @@ namespace GD.Engine.Managers
     {
         #region Fields
 
-        public Camera activeCamera = null;
+        private Camera activeCamera = null;
         private GameObject activeGameObject;
         private Dictionary<string, GameObject> cameras;
 

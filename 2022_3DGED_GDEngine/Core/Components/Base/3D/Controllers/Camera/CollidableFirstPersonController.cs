@@ -66,13 +66,13 @@ namespace GD.Engine
 
         protected override void HandleKeyboardInput(GameTime gameTime)
         {
-            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.Up))//&& Input.Keys.IsPressed(Keys.LeftControl))
+            if (Input.Keys.IsPressed(Keys.W))//&& Input.Keys.IsPressed(Keys.LeftControl))
             {
                 restrictedLook = transform.World.Forward; //we use Up instead of Forward
                 restrictedLook.Y = 0;
                 characterBody.Velocity += moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
             }
-            else if (Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.Down))
+            else if (Input.Keys.IsPressed(Keys.S))
             {
                 restrictedLook = transform.World.Forward;
                 restrictedLook.Y = 0;
