@@ -92,8 +92,8 @@ namespace GD.Engine
 
 
 
-            rotation.X = rotation.X < -30 ? -30f : rotation.X;
-            rotation.X = rotation.X > 30 ? 30f : rotation.X;
+            rotation.X = rotation.X < -100 ? -100f : rotation.X;
+            rotation.X = rotation.X > 100 ? 100f : rotation.X;
 
 
 

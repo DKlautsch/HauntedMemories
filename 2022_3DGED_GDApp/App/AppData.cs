@@ -53,7 +53,7 @@ namespace GD.App
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
         public static readonly float FIRST_PERSON_MOVE_SPEED = 0.036f;
         public static readonly float FIRST_PERSON_STRAFE_SPEED = 0.6f * FIRST_PERSON_MOVE_SPEED;
-        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0, 15, 5);
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0, 20, 5);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
@@ -104,7 +104,7 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_SPEED_SINGLE = 0.001f;
 
         //why bother? can you tilt your head at the same speed as you rotate it?
-        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.004f, 0.003f);
+        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.015f, 0.020f);
 
         #endregion Movement Constants
 
