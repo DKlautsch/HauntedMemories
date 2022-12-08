@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Reflection.Metadata;
 using Application = GD.Engine.Globals.Application;
 using Cue = GD.Engine.Managers.Cue;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
@@ -46,6 +47,9 @@ namespace GD.App
         private MyStateManager stateManager;
         private SceneManager<Scene2D> uiManager;
         private SceneManager<Scene2D> menuManager;
+
+        //TEMP FEILDS
+        private bool keyPicked = false;
 
 #if DEMO
 
@@ -97,6 +101,7 @@ namespace GD.App
         private void DemoStateManagerEvent()
         {
             EventDispatcher.Subscribe(EventCategoryType.Player, HandleEvent);
+            EventDispatcher.Subscribe(EventCategoryType.GameObject, HandleEvent);
         }
 
         private void HandleEvent(EventData eventData)
@@ -109,6 +114,65 @@ namespace GD.App
 
                 case EventActionType.OnLose:
                     System.Diagnostics.Debug.WriteLine(eventData.Parameters[2] as string);
+                    break;
+
+                case EventActionType.OnRemoveObject:
+                    Application.SceneManager.ActiveScene.Remove(ObjectType.Static, RenderType.Opaque, (x) => x.Name == ((GameObject)eventData.Parameters[0]).Name);
+
+                    if (((GameObject)eventData.Parameters[0]).Name == "KitchenKey") {
+
+                        System.Diagnostics.Debug.WriteLine($"You Picked up the Key!");
+                        keyPicked = true;
+                        // Set a boolean that player has key to true
+                        // Allow player to open kitchen door
+                        // Change door model to open door model without collision
+                        // Play sounds (try to open locked door, key pickup, open door)
+                    }                    
+                    break;
+
+                case EventActionType.OnDoorOpen:
+
+                    if (((GameObject)eventData.Parameters[0]).Name == "KitchenDoorClosed")
+                    {
+                        var texture = Content.Load<Texture2D>("Assets/Textures/Props/Other/DefaultMaterial_albedo");
+                        //Door Open model
+                        var model2 = Content.Load<Model>("Assets/Models/MainStructure/anim_doorOpen");
+                        var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model2);
+                        var gameObject2 = new GameObject("KitchenDoorOpen", ObjectType.Static, RenderType.Opaque);
+
+                        // Main kitchen door open
+                        gameObject2 = new GameObject("KitchenDoorOpen",
+                            ObjectType.Static, RenderType.Opaque);
+                        gameObject2.Transform = new Transform(
+                            new Vector3(0.19f, 0.16f, 0.19f),
+                            new Vector3(0, 0, 0),
+                            new Vector3(12, 0, -56.33f));
+                        gameObject2.AddComponent(new Renderer(
+                            new GDBasicEffect(litEffect),
+                            new Material(texture, 1f),
+                            mesh2));
+
+                        if (keyPicked == true) {
+
+                            //Removing collider
+                            //GameObject gameObject = Application.SceneManager.ActiveScene.Find(
+                            //    ObjectType.Static,
+                            //    RenderType.Opaque,
+                            //    (x) => x.Name == "KitchenDoorClosed");
+                            //gameObject.RemoveComponent<Collider>();
+
+                            //Removing object
+                            Application.SceneManager.ActiveScene.Remove(ObjectType.Static, RenderType.Opaque, (x) => x.Name == ((GameObject)eventData.Parameters[0]).Name);
+                            System.Diagnostics.Debug.WriteLine($"Kitchen door open");
+                            
+                            //Adding open door model
+                            Application.SceneManager.ActiveScene.Add(gameObject2);
+                        }
+                        else {
+                            System.Diagnostics.Debug.WriteLine($"Don't have key!");
+                        }
+                    }                         
+
                     break;
 
                 default:
@@ -137,7 +201,7 @@ namespace GD.App
             InitializeEngine(AppData.APP_RESOLUTION, true, true);
 
             //game specific content
-            InitializeLevel("My Amazing Game", AppData.SKYBOX_WORLD_SCALE);
+            InitializeLevel("Haunted Memories", AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
@@ -205,7 +269,7 @@ namespace GD.App
             GameObject menuGameObject = null;
             Material2D material = null;
             Renderer2D renderer2D = null;
-            Texture2D btnTexture = Content.Load<Texture2D>("Assets/Textures/DemoTextures/Menu/Controls/genericbtn");
+            Texture2D btnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/PlayButton");
             Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/MainMenuConcept");
             SpriteFont spriteFont = Content.Load<SpriteFont>("Assets/Fonts/menu");
             Vector2 btnScale = new Vector2(0.8f, 0.8f);
@@ -275,7 +339,7 @@ namespace GD.App
             material = new TextMaterial2D(spriteFont, "Play", new Vector2(70, 5), Color.White, 0.8f);
             //add renderer to draw the text
             renderer2D = new Renderer2D(material);
-            menuGameObject.AddComponent(renderer2D);
+            //menuGameObject.AddComponent(renderer2D);
 
             #endregion
 
@@ -320,7 +384,7 @@ namespace GD.App
             material = new TextMaterial2D(spriteFont, "Exit", new Vector2(70, 5), Color.White, 0.8f);
             //add renderer to draw the text
             renderer2D = new Renderer2D(material);
-            menuGameObject.AddComponent(renderer2D);
+            //menuGameObject.AddComponent(renderer2D);
 
             #endregion
 
@@ -672,7 +736,11 @@ namespace GD.App
             //OUR MODELS
             InitializeWalls();
             InitializeTable();
+            InitializeDoors();
             InitializeTowerModels();
+
+            //PICKABLE UPABLE
+            InitializeKey();
         }
 
         private void InitializeNonCollidableContent(float worldScale)
@@ -701,7 +769,6 @@ namespace GD.App
             /* OUR MODELS */
 
             //Big Stuctures
-            InitializeDoors();
             InitializeFloors();
             InitializeStairs();
             InitializeEntrance();
@@ -726,7 +793,6 @@ namespace GD.App
 
             //Garden
             InitializeWC();
-            InitializeKey();
             InitializeRing();
             InitializeWell();
             InitializeRock();
@@ -907,76 +973,131 @@ namespace GD.App
         private void InitializeDoors()
         {
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Other/DefaultMaterial_albedo");
+            
+            //Door Closed model
             var model = Content.Load<Model>("Assets/Models/MainStructure/anim_door");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            var door = new GameObject("KitchenDoorNorth",
-                ObjectType.Static, RenderType.Opaque);
-            door.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+            var gameObject = new GameObject("KitchenDoorNorth", ObjectType.Static, RenderType.Opaque);
+            var collider = new Collider(gameObject, true);
+
+            // Kitchen door Northmost
+            gameObject.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
                 new Vector3(0, 11.45916f, 0), new Vector3(45, 0, -62.2f)); // old y rotation 0.2
-            door.AddComponent(new Renderer(
+            gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
-            sceneManager.ActiveScene.Add(door);
+            //add Collision Surface(s)
+            collider = new Collider(gameObject, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                new Vector3(3, 8, 2.2f)),
+                new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 50);
+            gameObject.AddComponent(collider);
+            sceneManager.ActiveScene.Add(gameObject);
 
-            var door02 = new GameObject("KitchenDoor",
-              ObjectType.Static, RenderType.Opaque);
-            door02.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
-                new Vector3(0, 0, 0), new Vector3(11.9f, 0, -56.5f));
-            door02.AddComponent(new Renderer(
+            // Main kitchen door closed
+            GameObject DoorClosed = new GameObject("KitchenDoorClosed",
+                ObjectType.Static, RenderType.Opaque);
+            DoorClosed.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+            new Vector3(0, 0, 0), new Vector3(11.9f, 0, -56.5f));
+            DoorClosed.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
-            sceneManager.ActiveScene.Add(door02);
+            DoorClosed.GameObjectType = GameObjectType.Collectible;
+            //add Collision Surface(s)
+            collider = new Collider(DoorClosed, true);
+            collider.AddPrimitive(new Box(
+                DoorClosed.Transform.Translation,
+                DoorClosed.Transform.Rotation,
+                new Vector3(3, 8, 2)),
+                new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(DoorClosed, true, 50);
+            DoorClosed.AddComponent(collider);
+            sceneManager.ActiveScene.Add(DoorClosed);
 
-            var door03 = new GameObject("HallDoor",
+            // Garden to Hall door
+            gameObject = new GameObject("HallDoor",
               ObjectType.Static, RenderType.Opaque);
-            door03.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+            gameObject.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
                 new Vector3(0, 630.2536f, 0), new Vector3(-7.7f, 0, -54.1f));
-            door03.AddComponent(new Renderer(
+            gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
-            sceneManager.ActiveScene.Add(door03);
+            //add Collision Surface(s)
+            collider = new Collider(gameObject, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                new Vector3(3, 8, 2.2f)),
+                new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 50);
+            gameObject.AddComponent(collider);
+            sceneManager.ActiveScene.Add(gameObject);
 
-            var door04 = new GameObject("HallDoorInside",
-           ObjectType.Static, RenderType.Opaque);
-            door04.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+            // Hall to kitchen door
+            gameObject = new GameObject("HallDoorInside",
+                ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
                 new Vector3(0, 0, 0), new Vector3(-21.9f, 0, -58.2f));
-            door04.AddComponent(new Renderer(
+            gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
-            sceneManager.ActiveScene.Add(door04);
+            //add Collision Surface(s)
+            collider = new Collider(gameObject, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                new Vector3(3, 8, 2.2f)),
+                new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 50);
+            gameObject.AddComponent(collider);
+            sceneManager.ActiveScene.Add(gameObject);
 
             //Main Entrance Door
+            //Door Open model
             var model2 = Content.Load<Model>("Assets/Models/MainStructure/anim_doorOpen");
             var mesh2 = new Engine.ModelMesh(_graphics.GraphicsDevice, model2);
-            var mainDoor = new GameObject("MainDoor",
+            var gameObject2 = new GameObject("KitchenDoorOpen", ObjectType.Static, RenderType.Opaque);
+            gameObject2 = new GameObject("MainDoor",
                 ObjectType.Static, RenderType.Opaque);
-            mainDoor.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
+            gameObject2.Transform = new Transform(new Vector3(0.3f, 0.24f, 0.3f),
                 new Vector3(0, 0, 0), new Vector3(1.5f, 0, -19.5f));
-            mainDoor.AddComponent(new Renderer(
+            gameObject2.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh2));
-            sceneManager.ActiveScene.Add(mainDoor);
+            sceneManager.ActiveScene.Add(gameObject2);
         }
         //Placed & Textured
         private void InitializeKey()
         {
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Garden/key_albedo");
-            var model = Content.Load<Model>("Assets/Models/Garden/ancient_key");
+            var model = Content.Load<Model>("Assets/Models/Garden/ancient_key_Fixed");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            var key = new GameObject("KitchenKey",
-                ObjectType.Static, RenderType.Opaque);
-            key.Transform = new Transform(0.09f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(82.4f, 0.1f, -45.1f));
-            key.AddComponent(new Renderer(
+            var gameObject = new GameObject("KitchenKey", ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+            gameObject.Transform = new Transform(
+                Vector3.One,
+                new Vector3(0, 0, 0),
+                new Vector3(82.4f, 0.1f, -45.3f));//82.4f
+            gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f),
                 mesh));
-            sceneManager.ActiveScene.Add(key);
+            var collider = new Collider(gameObject, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                new Vector3(2, 2, 2)), 
+                new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(gameObject, true, 5);
+            sceneManager.ActiveScene.Add(gameObject);
         }
         //Placed & Textured
         private void InitializeBucket()
@@ -2689,7 +2810,7 @@ namespace GD.App
             gameObject.Transform = new Transform(
                 new Vector3(1, 1, 1),
                 new Vector3(0, 0, 0),
-                new Vector3(0, 1, 0));
+                new Vector3(0, 1, -25));
             var texture = Content.Load<Texture2D>("Assets/Textures/DemoTextures/Props/Crates/crate2");
             var model = Content.Load<Model>("Assets/Models/DemoModels/monkey");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);

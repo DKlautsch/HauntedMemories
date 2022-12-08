@@ -1,4 +1,5 @@
-﻿using GD.Engine.Events;
+﻿using GD.App;
+using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using System;
@@ -32,8 +33,8 @@ namespace GD.Engine
 
         protected virtual void HandleMouse(GameTime gameTime)
         {
-            //if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left))
-            GetPickedObject();
+            if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left))
+                GetPickedObject();
 
             //predicate was matched and i should notify
             if (pickedObject != null)
@@ -42,9 +43,19 @@ namespace GD.Engine
                 EventDispatcher.Raise(new EventData(EventCategoryType.Picking,
                     EventActionType.OnObjectPicked, parameters));
 
-                if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Right))
-                    EventDispatcher.Raise(new EventData(EventCategoryType.GameObject,
+                if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left))
+                {
+                    if (pickedObject.Name == "KitchenKey")
+                    {
+                        EventDispatcher.Raise(new EventData(EventCategoryType.GameObject,
                         EventActionType.OnRemoveObject, parameters));
+                    }
+                    else if (pickedObject.Name == "KitchenDoorClosed")
+                    {
+                        EventDispatcher.Raise(new EventData(EventCategoryType.GameObject,
+                        EventActionType.OnDoorOpen, parameters));
+                    }
+                }
             }
             else
             {
@@ -67,24 +78,35 @@ namespace GD.Engine
             if (pickedObject != null && collisionPredicate(pickedObject))
             {
                 //TODO - here is where you decide what to do!
-                // System.Diagnostics.Debug.WriteLine(pickedObject.GameObjectType);
+                System.Diagnostics.Debug.WriteLine(pickedObject.GameObjectType);
 
-                //var behaviour = pickedObject.GetComponent<PickupBehaviour>();
+                var behaviour = pickedObject.GetComponent<PickupBehaviour>();
 
-                //if (behaviour != null)
-                //   System.Diagnostics.Debug.WriteLine($"{behaviour.Desc} - {behaviour.Value}");
+                if (behaviour != null)
+                   System.Diagnostics.Debug.WriteLine($"{behaviour.Desc} - {behaviour.Value}");
 
-                ////OnRemove
-                ////OnPlay3D/2D
 
-                //object[] parameters = { pickedObject };
-                ////OnPickup
-                //EventDispatcher.Raise(new EventData(
-                //    EventCategoryType.GameObject,
-                //    EventActionType.OnRemoveObject,
-                //    parameters));
+                object[] parameters = { pickedObject };
 
-                //System.Diagnostics.Debug.WriteLine($"{pickedObject.Name} - {pickedObject.ID}");
+                if (pickedObject.Name == "KitchenKey")
+                {
+                    ////OnPickup
+                    EventDispatcher.Raise(new EventData(
+                        EventCategoryType.GameObject,
+                        EventActionType.OnRemoveObject,
+                        parameters));
+                    System.Diagnostics.Debug.WriteLine($"{pickedObject.Name} ");
+                }
+                else if(pickedObject.Name == "KitchenDoorClosed")
+                { 
+                    //Open door
+                    EventDispatcher.Raise(new EventData(
+                        EventCategoryType.GameObject,
+                        EventActionType.OnDoorOpen,
+                        parameters));
+                    System.Diagnostics.Debug.WriteLine($"{pickedObject.Name} ");
+                }               
+
             }
             else
                 pickedObject = null;

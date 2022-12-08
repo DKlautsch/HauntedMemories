@@ -179,6 +179,7 @@
         OnMouseClick,
 
         //add more here...
+        OnDoorOpen
     }
 
     /// <summary>
