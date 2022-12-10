@@ -54,6 +54,7 @@ namespace GD.Engine
                     {
                         EventDispatcher.Raise(new EventData(EventCategoryType.GameObject,
                         EventActionType.OnDoorOpen, parameters));
+                        //Application.SceneManager.ActiveScene.Remove(ObjectType.Static, RenderType.Opaque, (x) => x.Name == pickedObject.Name);
                     }
                 }
             }

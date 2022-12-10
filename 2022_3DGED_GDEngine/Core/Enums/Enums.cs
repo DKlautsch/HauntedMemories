@@ -179,7 +179,13 @@
         OnMouseClick,
 
         //add more here...
-        OnDoorOpen
+        OnDoorOpen,
+        OnOptionsScreen,
+        OnControlsScreen,
+        OnPlayButtonHover,
+        OnExitControlsScreen,
+        OnExitOptionsScreen,
+        OnLearnMore
     }
 
     /// <summary>
