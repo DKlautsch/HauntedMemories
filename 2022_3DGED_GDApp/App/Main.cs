@@ -19,8 +19,12 @@ using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Reflection.Metadata;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Timers;
 using Application = GD.Engine.Globals.Application;
 using Cue = GD.Engine.Managers.Cue;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
@@ -35,7 +39,7 @@ namespace GD.App
         private SpriteBatch _spriteBatch;
         private BasicEffect unlitEffect;
         private BasicEffect litEffect;
-
+        private static System.Timers.Timer aTimer;
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
         private SoundManager soundManager;
@@ -48,10 +52,43 @@ namespace GD.App
         private SceneManager<Scene2D> uiManager;
         private SceneManager<Scene2D> menuManager;
 
-        //TEMP FEILDS
-        private bool keyPicked = false;
-        private bool doorOpen = false;
 
+
+        //TEMP FEILDS
+        public bool keyPicked = false;
+        public bool doorOpen = false;
+        public bool resetaway = false;
+
+        public static Vector3 door01 = new Vector3(12,0,-56);
+        public static Vector3 door02 = new Vector3(-6,0,-54);
+        public static Vector3 door03 = new Vector3(45,0,-61);
+        public static Vector3 door04 = new Vector3(-21, 0, -58.5f);
+
+
+        public Vector3 note = new Vector3(12,0,-75);
+        public Vector3 well = new Vector3(42.5f, 0, -45);
+        public Vector3 stairs = new Vector3(-19, 0, -35);
+
+        public Vector3 NArrival = new Vector3(1, 0, 1);
+        public Vector3 NEntering = new Vector3(1.5f, 0, -26);
+        public Vector3 NGNote = new Vector3(12, 0, -52);
+
+        public Vector3 NFKey = new Vector3(79.5f, 0, -45);
+        public Vector3 NEKitchen = new Vector3(12, 0, -63);
+        public Vector3 NNUp = new Vector3(-19, 0, -35);
+
+        /*
+        public Vector3 NConfused = new Vector3(12, 0, -75);
+        public Vector3 NDarkness = new Vector3(12, 0, -75);
+        public Vector3 NHmm = new Vector3(12, 0, -75);
+        public Vector3 NKFound = new Vector3(12, 0, -75);
+        public Vector3 NLDoor = new Vector3(12, 0, -75);
+        public Vector3 NTPresence = new Vector3(12, 0, -75);
+        public Vector3 NTNote = new Vector3(12, 0, -75);
+        public Vector3 NUCause = new Vector3(12, 0, -75);
+        public Vector3 NUScream = new Vector3(12, 0, -75);
+        public Vector3 NWIGarden = new Vector3(12, 0, -75);
+        */
 #if DEMO
 
         private event EventHandler OnChanged;
@@ -64,6 +101,7 @@ namespace GD.App
 
         public Main()
         {
+            SetTimer();
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -207,13 +245,19 @@ namespace GD.App
 #if SHOW_DEBUG_INFO
             InitializeDebug();
 #endif
-
 #if DEMO
             DemoCode();
 #endif
 
             base.Initialize();
         }
+
+        public void InitializeScript()
+        {
+
+
+        }
+
 
         private void HandleExit(EventData eventData)
         {
@@ -929,19 +973,19 @@ namespace GD.App
         private void LoadSounds()
         {
             //DEMO SOUND
-            //var soundEffect =
-            //    Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
+            var soundEffect =
+                Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
 
-            ////add the new sound effect
-            //soundManager.Add(new Cue(
-            //    "boom1",
-            //    soundEffect,
-            //    SoundCategoryType.Alarm,
-            //    new Vector3(1, 1, 0),
-            //    false));
+            //add the new sound effect
+            soundManager.Add(new Cue(
+                "boom0",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(1, 1, 0),
+                false));
 
             //OUR SOUNDS
-            var soundEffect =
+            soundEffect =
                 Content.Load<SoundEffect>("Assets/Audio/Diegetic/GrassFootsteps-2");
 
             //add the new sound effect
@@ -978,6 +1022,221 @@ namespace GD.App
                 true));
             soundManager.Play2D("boom3");
             Application.SoundManager.Pause("boom3");
+
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/DoorUnlock");
+
+            soundManager.Add(new Cue(
+                "DUnlock",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0.5f, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/FiddleWithLockedDoor");
+
+            soundManager.Add(new Cue(
+                "FWLDoor",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(1, 1, 0),
+                false));
+
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/HammerSound02");
+
+            soundManager.Add(new Cue(
+                "HSound",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(1, 1, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/ScribbleSound");
+
+            soundManager.Add(new Cue(
+                "SSound",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(1, 1, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Take08_Scream");
+
+            soundManager.Add(new Cue(
+                "Scream",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(1, 1, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Arrival-1");
+
+            soundManager.Add(new Cue(
+                "NArrival",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Confused");
+
+            soundManager.Add(new Cue(
+                "NConfused",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Darkness");
+
+            soundManager.Add(new Cue(
+                "NDarkness",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Entering-1");
+
+            soundManager.Add(new Cue(
+                "NEntering",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Entering-Kitchen");
+
+            soundManager.Add(new Cue(
+                "NEKitchen",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Find-Key");
+
+            soundManager.Add(new Cue(
+                "NFKey",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Grandfather-Note");
+
+            soundManager.Add(new Cue(
+                "NGNote",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Hmm");
+
+            soundManager.Add(new Cue(
+                "NHmm",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Key-Found");
+
+            soundManager.Add(new Cue(
+                "NKFound",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Locked-Door");
+
+            soundManager.Add(new Cue(
+                "NLDoor",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Noway-Up");
+
+            soundManager.Add(new Cue(
+                "NNUp",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/The-Presence");
+
+            soundManager.Add(new Cue(
+                "NTPresence",
+                soundEffect,
+                SoundCategoryType.Alarm,
+               new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Torned-Note");
+
+            soundManager.Add(new Cue(
+                "NTNote",
+                soundEffect,
+                SoundCategoryType.Alarm,
+               new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Unknown-Cause");
+
+            soundManager.Add(new Cue(
+                "NUCause",
+                soundEffect,
+                SoundCategoryType.Alarm,
+               new Vector3(0.25f, 0, 0),
+                false));
+
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Unknown-Scream");
+
+            soundManager.Add(new Cue(
+                "NUScream",
+                soundEffect,
+                SoundCategoryType.Alarm,
+               new Vector3(0.25f, 0, 0),
+                false));
+
+            soundEffect =
+               Content.Load<SoundEffect>("Assets/Audio/Diegetic/Well-In-Garden");
+
+            soundManager.Add(new Cue(
+                "NWIGarden",
+                soundEffect,
+                SoundCategoryType.Alarm,
+                new Vector3(0.25f, 0, 0),
+                false));
+
+
         }
 
         private void LoadTextures()
@@ -1085,7 +1344,7 @@ namespace GD.App
             characterCollider.AddPrimitive(new Capsule(
                 cameraGameObject.Transform.Translation,
                 Matrix.CreateRotationX(MathHelper.PiOver2),
-                1, 3.6f),
+                1, 1.7f),
                 new MaterialProperties(0.2f, 0.8f, 0.7f));
             characterCollider.Enable(cameraGameObject, false, 1);
 
@@ -3677,8 +3936,117 @@ namespace GD.App
 
         #region Actions - Update, Draw
 
+
+
+        public Vector3 SoundCheck(Vector3 temp, string sound)
+        {
+            if(temp != Vector3.Zero)
+            if(cameraManager.activeCamera.transform.translation.X <= temp.X+2 && cameraManager.activeCamera.transform.translation.X >= temp.X - 2)
+                if (cameraManager.activeCamera.transform.translation.Z <= temp.Z + 2 && cameraManager.activeCamera.transform.translation.Z >= temp.Z - 2)
+                {
+                        Application.SoundManager.Stop(sound);
+                        Application.SoundManager.Play2D(sound);
+                        temp = Vector3.Zero;
+
+                    }
+
+            return temp;
+
+        }
+
+        public Vector3 NarrateCheck(Vector3 temp, string sound)
+        {
+            if (temp != Vector3.Zero)
+                if (cameraManager.activeCamera.transform.translation.X <= temp.X + 2 && cameraManager.activeCamera.transform.translation.X >= temp.X - 2)
+                    if (cameraManager.activeCamera.transform.translation.Z <= temp.Z + 2 && cameraManager.activeCamera.transform.translation.Z >= temp.Z - 2)
+                    {
+                        temp = Vector3.Zero;
+                        Application.SoundManager.Stop("NArrival");
+                        Application.SoundManager.Stop("NConfused");
+                        Application.SoundManager.Stop("NDarkness");
+                        Application.SoundManager.Stop("NEntering");
+                        Application.SoundManager.Stop("NEKitchen");
+                        Application.SoundManager.Stop("NFKey");
+                        Application.SoundManager.Stop("NGNote");
+                        Application.SoundManager.Stop("NHmm");
+                        Application.SoundManager.Stop("NKFound");
+                        Application.SoundManager.Stop("NLDoor");
+                        Application.SoundManager.Stop("NNUp");
+                        Application.SoundManager.Stop("NTPresence");
+                        Application.SoundManager.Stop("NTNote");
+                        Application.SoundManager.Stop("NUCause");
+                        Application.SoundManager.Stop("NUScream");
+                        Application.SoundManager.Stop("NWIGarden");
+
+
+
+
+                        Application.SoundManager.Play2D(sound);
+
+                    }
+
+            return temp;
+
+        }
+
+
+
+
+
+        public static void Reset()
+        {
+            door01 = new Vector3(12, 0, -56);
+            door02 = new Vector3(-6, 0, -54);
+            door03 = new Vector3(45, 0, -61);
+            door04 = new Vector3(-21, 0, -58.5f);
+        }
+
+        private static void SetTimer()
+        {
+            // Create a timer with a two second interval.
+            aTimer = new System.Timers.Timer(3000);
+            // Hook up the Elapsed event for the timer. 
+            aTimer.Elapsed += OnTimedEvent;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
+
+        private static void OnTimedEvent(Object source, ElapsedEventArgs e)
+        {
+            Reset();
+        }
+
         protected override void Update(GameTime gameTime)
         {
+            door01 = SoundCheck(door01, "FWLDoor");
+            door02 = SoundCheck(door02, "HSound");
+            door03 = SoundCheck(door03, "HSound");
+            door04 = SoundCheck(door04, "FWLDoor");
+
+
+            NArrival = NarrateCheck(NArrival  ,"NArrival");
+            NEntering = NarrateCheck(NEntering, "NEntering");
+            NGNote = NarrateCheck(NGNote, "NGNote");
+            NFKey = NarrateCheck(NFKey, "NKFound");
+            NEKitchen = NarrateCheck(NEKitchen, "NEKitchen");
+            NNUp = NarrateCheck(NNUp, "NNUp");
+
+            /*
+            
+            NarrateCheck(  ,"NGNote");
+            NarrateCheck(  ,"NHmm");
+            NarrateCheck(  ,"NKFound");
+            NarrateCheck(  ,"NLDoor");
+            NarrateCheck(  ,"NNUp");
+            NarrateCheck(  ,"NTPresence");
+            NarrateCheck(  ,"NTNote");
+            NarrateCheck(  ,"NUCause");
+            NarrateCheck(  ,"NUScream");
+            NarrateCheck(  ,"NWIGarden");
+            */
+
+
+
             #region Menu On/Off with U/P
 
             if (Input.Keys.WasJustPressed(Keys.P))
@@ -3713,6 +4081,39 @@ namespace GD.App
 
             #region Demo - sound
 
+            if (cameraManager.activeCamera.transform.translation.Z <= -56)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom3");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom2");
+                }
+                else
+                    Application.SoundManager.Pause("boom3");
+            else if (cameraManager.activeCamera.transform.translation.Z >= -56 && cameraManager.activeCamera.transform.translation.Z <= -20 && cameraManager.activeCamera.transform.translation.X <= -7)
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+                {
+                    Application.SoundManager.Resume("boom2");
+                    Application.SoundManager.Pause("boom1");
+                    Application.SoundManager.Pause("boom3");
+                }
+                else
+                    Application.SoundManager.Pause("boom2");
+
+            else
+                if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.D)
+                    || Input.Keys.IsPressed(Keys.Up) || Input.Keys.IsPressed(Keys.Down) || Input.Keys.IsPressed(Keys.Left) || Input.Keys.IsPressed(Keys.Right))
+            {
+                Application.SoundManager.Resume("boom1");
+                Application.SoundManager.Pause("boom3");
+                Application.SoundManager.Pause("boom2");
+            }
+            else
+                Application.SoundManager.Pause("boom1");
+
+            /*
             if (Input.Keys.WasJustPressed(Keys.B))
             {
                 object[] parameters = { "boom1" };
@@ -3723,11 +4124,11 @@ namespace GD.App
 
                 //    Application.SoundManager.Play2D("boom1");
             }
-
+            */
             #endregion
 
             #region Demo - Camera switching
-
+            /*
             if (Input.Keys.IsPressed(Keys.F1))
                 cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
             else if (Input.Keys.IsPressed(Keys.F2))
@@ -3736,7 +4137,7 @@ namespace GD.App
                 cameraManager.SetActiveCamera(AppData.CURVE_CAMERA_NAME);
             else if (Input.Keys.IsPressed(Keys.F4))
                 cameraManager.SetActiveCamera(AppData.THIRD_PERSON_CAMERA_NAME);
-
+            */
             #endregion Demo - Camera switching
 
             #region Demo - Gamepad

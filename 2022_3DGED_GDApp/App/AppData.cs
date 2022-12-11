@@ -104,7 +104,7 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_SPEED_SINGLE = 0.001f;
 
         //why bother? can you tilt your head at the same speed as you rotate it?
-        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.004f, 0.003f);
+        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.015f, 0.010f);
 
         #endregion Movement Constants
 

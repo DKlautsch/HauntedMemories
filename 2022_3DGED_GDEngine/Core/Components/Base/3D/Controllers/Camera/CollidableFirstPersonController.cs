@@ -62,54 +62,54 @@ namespace GD.Engine
 
         #endregion Actions - Update
 
-        #region Actions - Input
+#region Actions - Input
 
-        protected override void HandleKeyboardInput(GameTime gameTime)
+    protected override void HandleKeyboardInput(GameTime gameTime)
+    {
+        if (Input.Keys.IsPressed(Keys.W))//&& Input.Keys.IsPressed(Keys.LeftControl))
         {
-            if (Input.Keys.IsPressed(Keys.W))//&& Input.Keys.IsPressed(Keys.LeftControl))
-            {
-                restrictedLook = transform.World.Forward; //we use Up instead of Forward
-                restrictedLook.Y = 0;
-                characterBody.Velocity += moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else if (Input.Keys.IsPressed(Keys.S))
-            {
-                restrictedLook = transform.World.Forward;
-                restrictedLook.Y = 0;
-                characterBody.Velocity -= moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else
-            {
-                characterBody.DesiredVelocity = Vector3.Zero;
-            }
+            restrictedLook = transform.World.Forward; //we use Up instead of Forward
+            restrictedLook.Y = 0;
+            characterBody.Velocity += moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
         }
-
-        private void HandleStrafe(GameTime gameTime)
+        else if (Input.Keys.IsPressed(Keys.S))
         {
-            if (Input.Keys.IsPressed(Keys.A))
-            {
-                restrictedRight = transform.World.Right;
-                restrictedRight.Y = 0;
-                characterBody.Velocity -= strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else if (Input.Keys.IsPressed(Keys.D))
-            {
-                restrictedRight = transform.World.Right;
-                restrictedRight.Y = 0;
-                characterBody.Velocity += strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-            }
-            else
-            {
-                characterBody.DesiredVelocity = Vector3.Zero;
-            }
+            restrictedLook = transform.World.Forward;
+            restrictedLook.Y = 0;
+            characterBody.Velocity -= moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
         }
-
-        private void HandleJump(GameTime gameTime)
+        else if(!Input.Keys.IsPressed(Keys.A) && !Input.Keys.IsPressed(Keys.D))
         {
-            if (Input.Keys.IsPressed(Keys.Space))
-                characterBody.DoJump(jumpHeight);
+            characterBody.Velocity = characterBody.Velocity * new Vector3(0,1,0);
         }
-
-        #endregion Actions - Input
     }
+
+    private void HandleStrafe(GameTime gameTime)
+    {
+        if (Input.Keys.IsPressed(Keys.A))
+        {
+            restrictedRight = transform.World.Right;
+            restrictedRight.Y = 0;
+            characterBody.Velocity -= strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+        }
+        else if (Input.Keys.IsPressed(Keys.D))
+        {
+            restrictedRight = transform.World.Right;
+            restrictedRight.Y = 0;
+            characterBody.Velocity += strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+        }
+        else
+        {
+            characterBody.DesiredVelocity = Vector3.Zero;
+        }
+    } 
+
+    private void HandleJump(GameTime gameTime)
+    {
+        if (Input.Keys.IsPressed(Keys.Space))
+            characterBody.DoJump(jumpHeight);
+    }
+
+    #endregion Actions - Input
+}
 }
