@@ -1,8 +1,7 @@
-﻿using GD.Engine;
+﻿using System;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using System;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace GD.Engine
 {
@@ -66,19 +65,20 @@ namespace GD.Engine
 
     protected override void HandleKeyboardInput(GameTime gameTime)
     {
-        if (Input.Keys.IsPressed(Keys.W))//&& Input.Keys.IsPressed(Keys.LeftControl))
+        if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.Up))//&& Input.Keys.IsPressed(Keys.LeftControl))
         {
             restrictedLook = transform.World.Forward; //we use Up instead of Forward
             restrictedLook.Y = 0;
             characterBody.Velocity += moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
         }
-        else if (Input.Keys.IsPressed(Keys.S))
+        else if (Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.Down))
         {
             restrictedLook = transform.World.Forward;
             restrictedLook.Y = 0;
             characterBody.Velocity -= moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
         }
-        else if(!Input.Keys.IsPressed(Keys.A) && !Input.Keys.IsPressed(Keys.D))
+        else if(!Input.Keys.IsPressed(Keys.A) && !Input.Keys.IsPressed(Keys.D) &&
+                !Input.Keys.IsPressed(Keys.Left) && !Input.Keys.IsPressed(Keys.Right))
         {
             characterBody.Velocity = characterBody.Velocity * new Vector3(0,1,0);
         }
@@ -86,13 +86,13 @@ namespace GD.Engine
 
     private void HandleStrafe(GameTime gameTime)
     {
-        if (Input.Keys.IsPressed(Keys.A))
+        if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
         {
             restrictedRight = transform.World.Right;
             restrictedRight.Y = 0;
             characterBody.Velocity -= strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
         }
-        else if (Input.Keys.IsPressed(Keys.D))
+        else if (Input.Keys.IsPressed(Keys.D) || Input.Keys.IsPressed(Keys.Right))
         {
             restrictedRight = transform.World.Right;
             restrictedRight.Y = 0;

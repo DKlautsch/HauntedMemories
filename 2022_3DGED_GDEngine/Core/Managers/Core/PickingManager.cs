@@ -2,6 +2,7 @@
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
+using Keys = Microsoft.Xna.Framework.Input.Keys;
 using System;
 
 namespace GD.Engine
@@ -33,7 +34,7 @@ namespace GD.Engine
 
         protected virtual void HandleMouse(GameTime gameTime)
         {
-            if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left))
+            if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left) || Input.Keys.WasJustPressed(Keys.E)) 
                 GetPickedObject();
 
             //predicate was matched and i should notify
@@ -43,7 +44,7 @@ namespace GD.Engine
                 EventDispatcher.Raise(new EventData(EventCategoryType.Picking,
                     EventActionType.OnObjectPicked, parameters));
 
-                if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left))
+                if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Left) || Input.Keys.IsPressed(Keys.E))
                 {
                     if (pickedObject.Name == "KitchenKey")
                     {
@@ -53,8 +54,7 @@ namespace GD.Engine
                     else if (pickedObject.Name == "KitchenDoorClosed")
                     {
                         EventDispatcher.Raise(new EventData(EventCategoryType.GameObject,
-                        EventActionType.OnDoorOpen, parameters));
-                        //Application.SceneManager.ActiveScene.Remove(ObjectType.Static, RenderType.Opaque, (x) => x.Name == pickedObject.Name);
+                        EventActionType.OnDoorOpen, parameters));                        
                     }
                 }
             }
@@ -65,7 +65,7 @@ namespace GD.Engine
             }
         }
 
-        private void GetPickedObject()
+        public void GetPickedObject()
         {
             Vector3 pos;
             Vector3 normal;
