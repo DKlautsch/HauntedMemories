@@ -54,6 +54,10 @@ namespace GD.App
 
         //TEMP FEILDS
         public bool keyPicked = false;
+        public bool onPlayBtnHover = false;
+        public bool onOptionsBtnHover = false;
+        public bool onControlsBtnHover = false;
+        public bool onExitBtnHover = false;
         public bool doorOpen = false;
         public bool resetaway = false;
 
@@ -295,12 +299,70 @@ namespace GD.App
             }
         }
 
-        private void HandlePlayButtonHover(EventData eventData) //Change texture on hover
+        private void HandlePlayButtonHover(EventData eventData) //Change texture on hover / move button
         {
-            if (eventData.EventActionType == EventActionType.OnPlayButtonHover)
+            GameObject playBtn = Application.MenuSceneManager.ActiveScene.Find((x) => x.Name == ("play"));
+            if (playBtn != null)
             {
-                //System.Diagnostics.Debug.WriteLine("Hovering on Play Button");
+                if (eventData.EventActionType == EventActionType.OnPlayButtonHover)
+                {
+                    playBtn.Transform.SetTranslation(new Vector3(410, 325, 0));
+                }
+                else if (eventData.EventActionType == EventActionType.OnPlayButtonNotHover)
+                {
+                    playBtn.Transform.SetTranslation(new Vector3(410, 320, 0));
+                }
             }
+            else { return; }
+                  
+        }
+        private void HandleOptionsButtonHover(EventData eventData) //Change texture on hover
+        {
+            GameObject optionsBtn = Application.MenuSceneManager.ActiveScene.Find((x) => x.Name == ("options"));
+            if (optionsBtn != null)
+            {
+                if (eventData.EventActionType == EventActionType.OnOptionsButtonHover)
+                {
+                    optionsBtn.Transform.SetTranslation(new Vector3(410, 417, 0));
+                }
+                else if (eventData.EventActionType == EventActionType.OnOptionsButtonNotHover)
+                {
+                    optionsBtn.Transform.SetTranslation(new Vector3(410, 412, 0));
+                }
+            }
+            else { return; }
+        }
+        private void HandleControlsButtonHover(EventData eventData) //Change texture on hover
+        {
+            GameObject controlsBtn = Application.MenuSceneManager.ActiveScene.Find((x) => x.Name == ("controls"));
+            if (controlsBtn != null)
+            { 
+                if (eventData.EventActionType == EventActionType.OnControlsButtonHover)
+                {
+                    controlsBtn.Transform.SetTranslation(new Vector3(410, 510, 0));
+                }
+                else if (eventData.EventActionType == EventActionType.OnControlsButtonNotHover)
+                {
+                    controlsBtn.Transform.SetTranslation(new Vector3(410, 505, 0));
+                }
+            }
+            else { return; }
+        }
+        private void HandleExitButtonHover(EventData eventData) //Change texture on hover
+        {
+            GameObject exitBtn = Application.MenuSceneManager.ActiveScene.Find((x) => x.Name == ("exit"));
+            if (exitBtn != null)
+            { 
+                if (eventData.EventActionType == EventActionType.OnExitButtonHover)
+                {
+                    exitBtn.Transform.SetTranslation(new Vector3(525, 600, 0));
+                }
+                else if (eventData.EventActionType == EventActionType.OnExitButtonNotHover)
+                {
+                    exitBtn.Transform.SetTranslation(new Vector3(525, 595, 0));
+                }
+            }
+            else { return; }
         }
 
         #endregion Actions - Initialize
@@ -364,6 +426,12 @@ namespace GD.App
 
             //listen for Play button hover events
             EventDispatcher.Subscribe(EventCategoryType.Menu, HandlePlayButtonHover);
+            //listen for Play button hover events
+            EventDispatcher.Subscribe(EventCategoryType.Menu, HandleOptionsButtonHover);
+            //listen for Play button hover events
+            EventDispatcher.Subscribe(EventCategoryType.Menu, HandleControlsButtonHover);
+            //listen for Play button hover events
+            EventDispatcher.Subscribe(EventCategoryType.Menu, HandleExitButtonHover);
 
             #endregion
         }
@@ -444,6 +512,7 @@ namespace GD.App
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnPlay));
             buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnPlayButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnPlayButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion
@@ -489,6 +558,8 @@ namespace GD.App
             buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnOptionsScreen));
+            buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnOptionsButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnOptionsButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion
@@ -534,6 +605,8 @@ namespace GD.App
             buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnControlsScreen));
+            buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnControlsButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnControlsButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion
@@ -569,6 +642,8 @@ namespace GD.App
             buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExit));
+            buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion
@@ -649,7 +724,7 @@ namespace GD.App
             Renderer2D renderer2D = null;
             Texture2D exitBtnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/ExitButton");
             Texture2D learnMoreBtnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/LearnMoreButton");
-            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV2");
+            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV4");
             Vector2 btnScale = new Vector2(0.8f, 0.8f);
 
             //Create Menu Scene & Add Background image
@@ -667,7 +742,7 @@ namespace GD.App
             //var scaleToWindow = _graphics.GetScaleFactorForResolution(backGroundtexture, Vector2.Zero);
             //set transform
             menuGameObject.Transform = new Transform(
-                new Vector3(0.67f, 0.67f, 0.67f), //s
+                new Vector3(1.34f, 1.34f, 1.34f), //s
                 new Vector3(38, 0, 0), //r
                 new Vector3(0, 0, 0)); //t
 
@@ -714,6 +789,8 @@ namespace GD.App
             buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExitOptionsScreen));
+            buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion        
@@ -778,7 +855,7 @@ namespace GD.App
             Renderer2D renderer2D = null;
             Texture2D exitBtnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/ExitButton");
             Texture2D learnMoreBtnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/LearnMoreButton");
-            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV2");
+            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV4");
             Vector2 btnScale = new Vector2(0.8f, 0.8f);
 
             //Create Menu Scene & Add Background image
@@ -796,7 +873,7 @@ namespace GD.App
             //var scaleToWindow = _graphics.GetScaleFactorForResolution(backGroundtexture, Vector2.Zero);
             //set transform
             menuGameObject.Transform = new Transform(
-                new Vector3(0.67f, 0.67f, 0.67f), //s
+                new Vector3(1.34f, 1.34f, 1.34f), //s
                 new Vector3(38, 0, 0), //r
                 new Vector3(0, 0, 0)); //t
 
@@ -843,6 +920,8 @@ namespace GD.App
             buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExitControlsScreen));
+            buttonCollider2D.AddEvent(MouseButton.Hover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonHover));
+            buttonCollider2D.AddEvent(MouseButton.unHover, new EventData(EventCategoryType.Menu, EventActionType.OnExitButtonNotHover));
             menuGameObject.AddComponent(buttonCollider2D);
 
             #endregion        

@@ -3042,6 +3042,30 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV2.png
 
+#begin Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV3.png
+
+#begin Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/ControlsMenuConceptV4.png
+
 #begin Assets/Textures/Menu/Backgrounds/MainMenuConcept.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3089,6 +3113,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV2.png
+
+#begin Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV3.png
+
+#begin Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/OptionsMenuConceptV4.png
 
 #begin Assets/Textures/Menu/Buttons/ControlsButton_H.png
 /importer:TextureImporter

@@ -183,6 +183,13 @@
         OnOptionsScreen,
         OnControlsScreen,
         OnPlayButtonHover,
+        OnPlayButtonNotHover,
+        OnOptionsButtonHover,
+        OnOptionsButtonNotHover,
+        OnControlsButtonHover,
+        OnControlsButtonNotHover,
+        OnExitButtonHover,
+        OnExitButtonNotHover,
         OnExitControlsScreen,
         OnExitOptionsScreen,
         OnLearnMore

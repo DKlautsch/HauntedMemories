@@ -55,6 +55,11 @@ namespace GD.Engine
                 else if (Input.Mouse.WasJustClicked(Inputs.MouseButton.Right))
                     HandleMouseClick(Inputs.MouseButton.Right);
             }
+            else
+            {
+                //check for hover
+                HandleMouseNotHover();
+            }
         }
 
         protected virtual void HandleMouseScroll(int scrollDelta)
@@ -66,6 +71,10 @@ namespace GD.Engine
         }
 
         protected virtual void HandleMouseHover()
+        {
+        }
+
+        protected virtual void HandleMouseNotHover()
         {
         }
     }

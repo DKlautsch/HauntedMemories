@@ -73,6 +73,21 @@ namespace GD.Engine
             }
         }
 
+        protected override void HandleMouseNotHover()
+        {
+            List<EventData> eventList;
+
+            //get events for this button
+            events.TryGetValue(MouseButton.unHover, out eventList);
+
+            if (eventList != null)
+            {
+                //raise all events
+                foreach (EventData eventData in eventList)
+                    EventDispatcher.Raise(eventData);
+            }
+        }
+
         protected override void HandleMouseScroll(int scrollDelta)
         {
             List<EventData> eventList;
