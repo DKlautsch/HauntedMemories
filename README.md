@@ -4,3 +4,14 @@
 
 ## Overview ##
 This repository contains code for the game engine we developed in class and our game code.
+
+## Additional information ##
+
+Providing any install / run / additional information : 
+None required, download and run as normal.
+
+Known bugs list, technical issues / work around (core / major) etc. : 
+
+No compile/run errors.
+Walk slowly around the castle as there are sound triggers and if you walk over another one while one is still playing it will cut off the previous one.
+
