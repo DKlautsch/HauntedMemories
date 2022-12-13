@@ -71,6 +71,8 @@ namespace GD.App
         public Vector3 well = new Vector3(42.5f, 0, -45);
         public Vector3 stairs = new Vector3(-19, 0, -35);
 
+        public Vector3 scream = new Vector3(-10, 0, -54);
+
         public Vector3 NArrival = new Vector3(1, 0, 1);
         public Vector3 NEntering = new Vector3(1.5f, 0, -26);
         public Vector3 NGNote = new Vector3(12, 0, -52);
@@ -163,6 +165,7 @@ namespace GD.App
 
                     if (((GameObject)eventData.Parameters[0]).Name == "KitchenKey") {
 
+                        
                         System.Diagnostics.Debug.WriteLine($"You Picked up the Key!");
                         keyPicked = true;
                         InitializeKeyImageHUD();
@@ -244,7 +247,7 @@ namespace GD.App
             InitializeLevel("Haunted Memories", AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
-            InitializeDebug();
+          InitializeDebug();
 #endif
 #if DEMO
             DemoCode();
@@ -1067,7 +1070,7 @@ namespace GD.App
             Material2D material = null;
             Texture2D keyImage = Content.Load<Texture2D>("Assets/Textures/HUD/key_HUD");
             Scene2D mainHUD = Application.UISceneManager.SetActiveScene("game HUD");
-
+            
             #region Key
 
             #region Add UI Element
@@ -1219,7 +1222,7 @@ namespace GD.App
                 "Scream",
                 soundEffect,
                 SoundCategoryType.Alarm,
-                new Vector3(1, 1, 0),
+                new Vector3(1, 0, 0),
                 false));
 
             soundEffect =
@@ -4165,10 +4168,19 @@ namespace GD.App
 
         protected override void Update(GameTime gameTime)
         {
+            if(keyPicked==true && doorOpen == false)
+            door01 = SoundCheck(door01, "DUnlock");
+            else if(doorOpen == false)
+            door01 = SoundCheck(door01, "HSound");
+            else
             door01 = SoundCheck(door01, "FWLDoor");
+            
             door02 = SoundCheck(door02, "HSound");
             door03 = SoundCheck(door03, "HSound");
             door04 = SoundCheck(door04, "FWLDoor");
+
+
+            scream = SoundCheck(scream, "Scream");
 
 
             NArrival = NarrateCheck(NArrival  ,"NArrival");
